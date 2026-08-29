@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-providers";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col">
+      <ClerkProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -43,6 +46,7 @@ export default function RootLayout({
             {children}
           </QueryProvider>
         </ThemeProvider>
+      </ClerkProvider>
       </body>
     </html>
   );
