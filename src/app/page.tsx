@@ -1,8 +1,13 @@
 import { GlassNavbar } from "@/components/home/glass-navbar";
 import { HomeBackground } from "@/components/home/home-background";
 import { PromptInput } from "@/components/home/prompt-input";
+import { onBoardUser } from "@/features/auth/actions";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  await onBoardUser();
+
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden">
       <HomeBackground />
