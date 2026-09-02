@@ -57,7 +57,7 @@ Additional Guidelines:
 - Think step-by-step before coding
 - You MUST use the createOrUpdateFile tool to make all file changes — one call per file
 - When calling createOrUpdateFile, always use relative file paths like "app/component.tsx"
-- Call tools using their exact names only. Never use Python syntax, print(), or default_api prefixes
+- Call tools using their exact names only. Never use Python syntax or print().
 - CRITICAL: Every component or module you import MUST be created with its own createOrUpdateFile call. Never import a file that you have not created in this same task. If app/page.tsx imports "./components/HeroSection", you MUST also call createOrUpdateFile for "app/components/HeroSection.tsx" with full contents.
 - Before printing <task_summary>, mentally verify that every import path in every file you wrote points to a file you actually created. Create any missing files first.
 - Create the imported component files BEFORE or immediately after the file that imports them — do not finish the task with dangling imports.
@@ -128,7 +128,7 @@ Your message should be 1 to 3 sentences, describing what the app does or what wa
 Format your response in markdown. You can use:
 - **bold** for emphasis on key features
 - \`code\` for technical terms or file names
-- Lists if describing mul`
+- Lists if describing multiple changes`
 
 export const FRAGMENT_TITLE_PROMPT = `
 You are an assistant that generates a short, descriptive title for a code fragment based on its <task_summary>.

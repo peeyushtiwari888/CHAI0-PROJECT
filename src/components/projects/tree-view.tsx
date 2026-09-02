@@ -26,14 +26,15 @@ function getFileIcon(name: string) {
   switch (ext) {
     case "ts":
     case "tsx":
+      return <FileCodeIcon className="size-4 shrink-0 text-blue-500/80" />;
     case "js":
     case "jsx":
-      return <FileCodeIcon className="size-4 shrink-0 text-sky-500" />;
+      return <FileCodeIcon className="size-4 shrink-0 text-yellow-500/80" />;
     case "json":
-      return <FileJsonIcon className="size-4 shrink-0 text-amber-500" />;
+      return <FileJsonIcon className="size-4 shrink-0 text-emerald-500/80" />;
     case "css":
     case "scss":
-      return <FileCodeIcon className="size-4 shrink-0 text-pink-500" />;
+      return <FileCodeIcon className="size-4 shrink-0 text-pink-500/80" />;
     case "md":
     case "txt":
       return <FileTextIcon className="size-4 shrink-0 text-muted-foreground" />;
@@ -122,22 +123,27 @@ function TreeNode({
     const isSelected = selectedValue === currentPath;
 
     return (
-      <button
-        type="button"
-        onClick={() => onSelect?.(currentPath)}
-        style={{ paddingLeft: indent + 18 }}
-        className={cn(
-          "flex w-full items-center gap-2 py-1 pr-2 text-sm transition-colors",
-          "hover:bg-accent/60",
-          isSelected
-            ? "bg-accent font-medium text-accent-foreground"
-            : "text-foreground/80"
+      <div className="relative group/file">
+        {isSelected && (
+          <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary rounded-r-full" />
         )}
-        title={name}
-      >
-        {getFileIcon(String(name))}
-        <span className="truncate">{name}</span>
-      </button>
+        <button
+          type="button"
+          onClick={() => onSelect?.(currentPath)}
+          style={{ paddingLeft: indent + 18 }}
+          className={cn(
+            "flex w-full items-center gap-2 py-1.5 pr-2 text-[13px] transition-all",
+            "hover:bg-muted/50",
+            isSelected
+              ? "bg-primary/10 font-semibold text-primary"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+          title={name}
+        >
+          {getFileIcon(String(name))}
+          <span className="truncate">{name}</span>
+        </button>
+      </div>
     );
   }
 
@@ -147,19 +153,19 @@ function TreeNode({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         style={{ paddingLeft: indent }}
-        className="flex w-full items-center gap-1.5 py-1 pr-2 text-sm text-foreground/90 transition-colors hover:bg-accent/60"
+        className="group/folder flex w-full items-center gap-1.5 py-1.5 pr-2 text-[13px] text-muted-foreground transition-all hover:bg-muted/50 hover:text-foreground"
         title={name}
       >
         <ChevronRightIcon
           className={cn(
-            "size-4 shrink-0 text-muted-foreground transition-transform",
-            open && "rotate-90"
+            "size-3.5 shrink-0 transition-transform",
+            open ? "rotate-90 text-foreground/50" : "text-muted-foreground/50 group-hover/folder:text-foreground/50"
           )}
         />
         {open ? (
-          <FolderOpenIcon className="size-4 shrink-0 text-sky-500" />
+          <FolderOpenIcon className="size-4 shrink-0 text-sky-500/80" />
         ) : (
-          <FolderIcon className="size-4 shrink-0 text-sky-500" />
+          <FolderIcon className="size-4 shrink-0 text-sky-500/80" />
         )}
         <span className="truncate font-medium">{name}</span>
       </button>

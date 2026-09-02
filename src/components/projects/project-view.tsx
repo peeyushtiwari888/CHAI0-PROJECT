@@ -13,102 +13,76 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Fragment } from "@/generated/prisma/client";
 import ProjectHeader from "./project-header";
 import MessageContainer from "./message-container";
-import FragmentWeb from "./fragment-web";
-import { FileExplorer } from "./file-explorer";
+import { WorkspaceSidebar } from "./workspace-sidebar";
+import { WorkspacePreview } from "./workspace-preview";
 
 export type ProjectFragment = Fragment & {
     files: Record<string, string>;
   };
 
 export function ProjectView({ projectId }: { projectId: string }) {
-    const [activeFragment, setActiveFragment] = useState<ProjectFragment | null>(
-      null
-    );
-    const [tabState, setTabState] = useState<"preview" | "code">("preview");
-  
-    return (
-      <div className="h-screen">
-        <ResizablePanelGroup orientation="horizontal">
+  const [activeFragment, setActiveFragment] = useState<ProjectFragment | null>(null);
+  const [tabState, setTabState] = useState<"preview" | "code">("preview");
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+
+  // Auto-switch to Code tab when a file is selected
+  const handleSelectFile = (filePath: string) => {
+    setSelectedFile(filePath);
+    if (tabState !== "code") {
+      setTabState("code");
+    }
+  };
+
+  return (
+    <div className="flex h-screen flex-col bg-background overflow-hidden">
+      {/* Workspace Header - Full Width */}
+      <ProjectHeader projectId={projectId} />
+
+      <div className="flex-1 overflow-hidden">
+        <ResizablePanelGroup orientation="horizontal" className="h-full">
+          {/* Left Panel: File Explorer */}
           <ResizablePanel
-            defaultSize={28}
-            minSize={20}
-            className="flex min-h-0 flex-col"
+            defaultSize={18}
+            minSize={12}
+            maxSize={30}
+            className="flex flex-col min-w-[200px]"
           >
-            <ProjectHeader projectId={projectId} />
+            <WorkspaceSidebar 
+              files={activeFragment?.files}
+              selectedFile={selectedFile}
+              onSelectFile={handleSelectFile}
+            />
+          </ResizablePanel>
+
+          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
+
+          {/* Center Panel: AI Chat */}
+          <ResizablePanel
+            defaultSize={35}
+            minSize={25}
+            maxSize={50}
+            className="flex flex-col bg-muted/10 relative"
+          >
             <MessageContainer
               projectId={projectId}
               activeFragment={activeFragment}
               setActiveFragment={setActiveFragment}
             />
-            
           </ResizablePanel>
-  
-          <ResizableHandle withHandle />
-  
-          <ResizablePanel defaultSize={72} minSize={45} className="min-w-0">
-            <Tabs
-              className="flex h-full flex-col"
-              defaultValue="preview"
-              value={tabState}
-              onValueChange={(value) => setTabState(value as "preview" | "code")}
-            >
-              <div className="flex w-full items-center gap-x-2 border-b p-2">
-                <TabsList className="h-8 rounded-md border p-0">
-                  <TabsTrigger
-                    value="preview"
-                    className="flex items-center gap-x-2 rounded-md px-3"
-                  >
-                    <EyeIcon className="size-4" />
-                    <span>Demo</span>
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="code"
-                    className="flex items-center gap-x-2 rounded-md px-3"
-                  >
-                    <Code className="size-4" />
-                    <span>Code</span>
-                  </TabsTrigger>
-                </TabsList>
-  
-                <div className="ml-auto flex items-center gap-x-2">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/">
-                      <CrownIcon className="mr-2 size-4" />
-                      Upgrade
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-  
-              <TabsContent
-                value="preview"
-                className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden"
-              >
-                {activeFragment ? (
-                  <FragmentWeb data={activeFragment} />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Select a fragment to preview
-                  </div>
-                )}
-              </TabsContent>
-  
-              <TabsContent
-                value="code"
-                className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden"
-              >
-                {activeFragment?.files &&
-                Object.keys(activeFragment.files).length > 0 ? (
-                  <FileExplorer files={activeFragment.files} />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Select a fragment to view code
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
+
+          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
+
+          {/* Right Panel: Preview & Code */}
+          <ResizablePanel defaultSize={47} minSize={30} className="flex flex-col">
+            <WorkspacePreview
+              activeFragment={activeFragment}
+              selectedFile={selectedFile}
+              tabState={tabState}
+              setTabState={setTabState}
+            />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
-    );
-  }
+    </div>
+  );
+}

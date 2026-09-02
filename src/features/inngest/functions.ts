@@ -3,7 +3,7 @@ import { inngest } from "./client";
 import { Sandbox } from "e2b";
 import { MessageRole, MessageType } from "@/generated/prisma/enums";
 
-import { createAgent, createNetwork, createState, createTool, gemini } from "@inngest/agent-kit"
+import { createAgent, createNetwork, createState, createTool, gemini, openai } from "@inngest/agent-kit"
 import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/lib/prompt";
 import z from "zod"
 import { agentOutputText, captureTaskSummary, connectSandbox, lastAssistantTextMessageContent } from "./utils";
@@ -69,11 +69,9 @@ export const codeAgentFunction = inngest.createFunction(
 
     const codeAgent = createAgent({
       name: "code-agent",
-      description: "An expert coding agent",
       system: PROMPT,
-      model: gemini({ model: "gemini-2.5-flash", apiKey: process.env.GEMINI_API_KEY! }),
+      model: gemini({ model: "gemini-3.7-flash", apiKey: process.env.GEMINI_API_KEY! }),
       tools: [
-        // 1. Terminal
         createTool({
           name: "terminal",
           description: "Use the terminal to run commands",
@@ -87,6 +85,7 @@ export const codeAgentFunction = inngest.createFunction(
               const sandbox = await Sandbox.connect(sandboxId);
 
               const result = await sandbox.commands.run(command, {
+                timeoutMs: 60000,
                 onStdout: (data: string) => {
                   buffers.stdout += data;
                 },
@@ -202,22 +201,23 @@ export const codeAgentFunction = inngest.createFunction(
 
     });
 
-    const result = await network.run(event.data.value, { state });
+    const inputValue = event.data?.value || "Continue";
+    const result = await network.run(inputValue, { state });
     const { summary = "", files = {} } = result.state?.data || {};
 
-    const makeTextAgent = (name: string, system: string) => createAgent({ 
-      name, 
-      system, 
-      model: gemini({ model: "gemini-2.5-flash", apiKey: process.env.GEMINI_API_KEY! })
+    const makeTextAgent = (name: string, system: string) => createAgent({
+      name,
+      system,
+      model: gemini({ model: "gemini-3.7-flash", apiKey: process.env.GEMINI_API_KEY! }),
     });
-
+    
     const fragmentTitleGenerator = makeTextAgent("fragment-title-generator", FRAGMENT_TITLE_PROMPT);
     const responseGenerator = makeTextAgent("response-generator", RESPONSE_PROMPT);
 
-    const [fragmentTitleResult, responseResult] = await Promise.all([
-      step.run("generate-fragment-title", () => fragmentTitleGenerator.run(summary)),
-      step.run("generate-response", () => responseGenerator.run(summary))
-    ]);
+    const finalSummary = summary.trim() ? summary : `The user requested: ${inputValue}`;
+
+    const fragmentTitleResult = await step.run("generate-fragment-title", () => fragmentTitleGenerator.run(finalSummary));
+    const responseResult = await step.run("generate-response", () => responseGenerator.run(finalSummary));
 
     const fragmentTitleOutput = fragmentTitleResult?.output || fragmentTitleResult;
     const responseOutput = responseResult?.output || responseResult;
@@ -227,9 +227,7 @@ export const codeAgentFunction = inngest.createFunction(
 
     console.log(files)
 
-    const isError =
-      !result.state.data.summary ||
-      Object.keys(result.state.data.files || {}).length === 0;
+    const isError = !finalSummary;
 
 
     const sandboxUrl = await step.run("get-sandbox-url", async () => {

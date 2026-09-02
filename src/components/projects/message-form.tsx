@@ -21,7 +21,15 @@ const MAX_LENGTH = 1000;
  *
  * @param projectId - The project the message is sent to.
  */
-export default function MessageForm({ projectId }: { projectId: string }) {
+export default function MessageForm({ 
+  projectId,
+  placeholder = "Describe what you want to build...",
+  suggestions = []
+}: { 
+  projectId: string,
+  placeholder?: string,
+  suggestions?: string[]
+}) {
   const [content, setContent] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const { mutateAsync, isPending } = useCreateMessage(projectId);
@@ -52,52 +60,90 @@ export default function MessageForm({ projectId }: { projectId: string }) {
   }
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        void onSubmit();
-      }}
-      className={cn(
-        "relative rounded-xl border bg-sidebar p-4 pt-1 transition-all dark:bg-sidebar",
-        isFocused && "shadow-lg ring-2 ring-primary/20"
-      )}
-    >
-      <TextareaAutosize
-        value={content}
-        onChange={(event) => setContent(event.target.value)}
-        disabled={isPending}
-        placeholder="Describe what you want to create..."
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        minRows={3}
-        maxRows={8}
-        className={cn(
-          "w-full resize-none border-none bg-transparent pt-4 outline-none",
-          isPending && "opacity-50"
-        )}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
-            event.preventDefault();
-            void onSubmit();
-          }
+    <div className="relative mx-auto w-full max-w-3xl pb-6 px-4">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          void onSubmit();
         }}
-      />
+        className={cn(
+          "relative flex flex-col rounded-2xl border border-border/50 bg-background/50 backdrop-blur-xl p-4 shadow-sm transition-all duration-300",
+          isFocused ? "border-primary/30 bg-background/80 shadow-primary/5 ring-4 ring-primary/10" : "hover:border-border hover:bg-background/60 hover:shadow-md"
+        )}
+      >
+        {suggestions.length > 0 && !content && !isFocused && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {suggestions.map((suggestion, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className="text-xs font-medium px-3 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-colors"
+                onClick={() => {
+                  setContent(suggestion);
+                  // We can't safely auto-submit immediately here without waiting for React state, 
+                  // but for UX, users often want to review/edit a suggestion before sending.
+                  // If we want instant submit, we'd call the mutation directly here.
+                  // For now, it populates the textarea cleanly.
+                  setTimeout(() => {
+                    const el = document.querySelector('textarea');
+                    if (el) el.focus();
+                  }, 10);
+                }}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        )}
 
-      <div className="flex items-end justify-between gap-x-2 pt-2">
-        <div className="font-mono text-[10px] text-muted-foreground">
-          <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-            <span>&#8984;</span>Enter
-          </kbd>
-          &nbsp; to submit
+        <TextareaAutosize
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
+          disabled={isPending}
+          placeholder={placeholder}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          minRows={1}
+          maxRows={8}
+          className={cn(
+            "w-full resize-none border-none bg-transparent text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/60 outline-none",
+            isPending && "opacity-50 cursor-not-allowed"
+          )}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              // Standard enter to submit, shift+enter for newline
+              event.preventDefault();
+              void onSubmit();
+            }
+          }}
+        />
+
+        <div className="mt-3 flex items-center justify-between border-t border-border/40 pt-3">
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
+              <kbd className="font-sans">Enter</kbd> to submit
+            </span>
+            <span className="hidden sm:inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
+              <kbd className="font-sans">Shift + Enter</kbd> for newline
+            </span>
+          </div>
+          
+          <Button
+            className={cn(
+              "h-8 rounded-full px-4 text-xs font-semibold shadow-sm transition-all",
+              !content.trim() ? "opacity-50" : "hover:scale-105 active:scale-95"
+            )}
+            disabled={isPending || !content.trim()}
+            type="submit"
+          >
+            {isPending ? (
+              <span className="flex items-center gap-2"><Spinner className="size-3" /> Building...</span>
+            ) : (
+              <span className="flex items-center gap-2">Send <ArrowUpIcon className="size-3" /></span>
+            )}
+          </Button>
         </div>
-        <Button
-          className={cn("size-8 rounded-full", isPending && "border bg-muted-foreground")}
-          disabled={isPending || !content.trim()}
-          type="submit"
-        >
-          {isPending ? <Spinner /> : <ArrowUpIcon className="size-4" />}
-        </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

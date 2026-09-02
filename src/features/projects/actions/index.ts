@@ -7,12 +7,15 @@ import { prisma } from "@/lib/db";
 
 
 export const createProject = async (value: string) => {
-    const user = await getCurrentUser();
+    let user;
+    try {
+        user = await getCurrentUser();
+    } catch (e: any) {
+        throw new Error(e.message || String(e));
+    }
 
     if (!user) {
-        return {
-            error: "Unauthorized",
-        }
+        throw new Error("Unauthorized (getCurrentUser returned null for an unknown reason)");
     }
 
     try {

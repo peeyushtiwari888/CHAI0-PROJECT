@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-providers";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ClerkProvider } from '@clerk/nextjs'
+import { CommandPalette } from "@/components/layout/command-palette";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -41,6 +43,8 @@ export default function RootLayout({
         >
           <QueryProvider>
             {children}
+            <CommandPalette />
+            <Toaster richColors position="top-center" />
           </QueryProvider>
         </ThemeProvider>
       </ClerkProvider>

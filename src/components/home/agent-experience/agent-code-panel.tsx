@@ -12,8 +12,8 @@ export function AgentCodePanel({ isActive }: AgentCodePanelProps) {
 
   useEffect(() => {
     if (isActive) {
-      let fileTimer: NodeJS.Timeout;
-      let codeTimer: NodeJS.Timeout;
+      let fileTimer: NodeJS.Timeout | undefined;
+      let codeTimer: NodeJS.Timeout | undefined;
 
       const runAnimation = () => {
         // Sequentially show files

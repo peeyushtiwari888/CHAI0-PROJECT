@@ -10,8 +10,35 @@ import { cn } from "@/lib/utils";
 import type { Fragment } from "@/generated/prisma/client";
 import { MessageRole, MessageType } from "@/generated/prisma/enums";
 import { format } from "date-fns";
-import { ChevronRightIcon, Code2Icon } from "lucide-react";
+import { ChevronRightIcon, Code2Icon, FileCode2Icon, CheckCircle2Icon } from "lucide-react";
 import { Chai0Mark } from "@/components/brand/chai0-logo";
+
+function AgentActivityBlock({ files }: { files: Record<string, string> }) {
+  const filePaths = Object.keys(files);
+  if (filePaths.length === 0) return null;
+
+  return (
+    <details className="group overflow-hidden rounded-xl border border-border/50 bg-background/50 shadow-sm mt-4 transition-all">
+      <summary className="flex cursor-pointer items-center justify-between bg-muted/30 px-4 py-3 hover:bg-muted/50 focus:outline-none">
+        <div className="flex items-center gap-2">
+          <CheckCircle2Icon className="size-4 text-emerald-500" />
+          <span className="text-sm font-medium text-foreground">Generated {filePaths.length} file{filePaths.length > 1 ? 's' : ''}</span>
+        </div>
+        <ChevronRightIcon className="size-4 text-muted-foreground transition-transform duration-200 group-open:rotate-90" />
+      </summary>
+      <div className="border-t border-border/50 bg-background px-4 py-3">
+        <ul className="flex flex-col gap-2">
+          {filePaths.map((path) => (
+            <li key={path} className="flex items-center gap-2 text-sm text-muted-foreground">
+              <FileCode2Icon className="size-3.5 text-primary/70" />
+              <span className="font-mono text-xs">{path}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  );
+}
 
 /**
  * Clickable card representing a generated fragment inside an assistant message.
@@ -36,9 +63,8 @@ function FragmentCard({
     <button
       type="button"
       className={cn(
-        "flex w-fit items-start gap-2 rounded-lg border bg-muted p-2 text-start transition-colors hover:bg-secondary",
-        isActiveFragment &&
-          "border-primary bg-primary text-primary-foreground hover:bg-primary"
+        "group flex w-full max-w-md items-center gap-4 rounded-xl border bg-background/50 p-4 text-start shadow-sm transition-all hover:shadow-md hover:bg-muted/50",
+        isActiveFragment ? "border-primary/50 ring-1 ring-primary/50 shadow-primary/10" : "border-border/50"
       )}
       onClick={() =>
         onFragmentClick({
@@ -47,27 +73,38 @@ function FragmentCard({
         })
       }
     >
-      <Code2Icon className="mt-0.5 size-4" />
-      <div className="flex flex-1 flex-col">
-        <span className="line-clamp-1 text-sm font-medium">{fragment.title}</span>
-        <span className="text-sm">Preview</span>
+      <div className={cn(
+        "flex size-10 items-center justify-center rounded-lg transition-colors",
+        isActiveFragment ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground group-hover:text-foreground group-hover:bg-muted-foreground/10"
+      )}>
+        <Code2Icon className="size-5" />
       </div>
-      <ChevronRightIcon className="mt-0.5 size-4" />
+      
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <span className="truncate text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+          {fragment.title}
+        </span>
+        <span className="text-xs text-muted-foreground truncate">
+          Click to inspect generated code
+        </span>
+      </div>
+      
+      <div className={cn(
+         "flex size-6 items-center justify-center rounded-full transition-all",
+         isActiveFragment ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+      )}>
+         <ChevronRightIcon className="size-3.5" />
+      </div>
     </button>
   );
 }
 
-/**
- * A message bubble for content authored by the user (right-aligned).
- *
- * @param content - The user's message text.
- */
 function UserMessage({ content }: { content: string }) {
   return (
-    <div className="flex justify-end pb-4 pl-10 pr-2">
-      <Card className="max-w-[80%] break-words rounded-lg border-none bg-muted p-2 shadow-none">
+    <div className="flex w-full justify-end py-6 px-4">
+      <div className="max-w-[85%] rounded-2xl bg-primary/10 px-5 py-3.5 text-[15px] leading-relaxed text-foreground shadow-sm">
         {content}
-      </Card>
+      </div>
     </div>
   );
 }
@@ -104,26 +141,42 @@ function AssistantMessage({
   return (
     <div
       className={cn(
-        "group flex flex-col px-2 pb-4",
-        type === MessageType.ERROR && "text-red-700 dark:text-red-500"
+        "group flex w-full flex-col px-4 py-8 bg-muted/5 border-y border-border/20",
+        type === MessageType.ERROR && "bg-red-500/5 border-red-500/20"
       )}
     >
-      <div className="mb-2 flex items-center gap-2 pl-2">
-        <Chai0Mark className="h-7 w-auto shrink-0" />
-        <span className="text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
-          {format(new Date(createdAt), "HH:mm 'on' MMM dd, yyyy")}
-        </span>
-      </div>
+      <div className="mx-auto flex w-full max-w-3xl flex-col">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 shadow-sm border border-primary/20">
+            <Chai0Mark className="size-4 text-primary" />
+          </div>
+          <div className="flex flex-col">
+             <span className="text-sm font-semibold text-foreground">Chai0 Agent</span>
+             <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">
+               {format(new Date(createdAt), "HH:mm")}
+             </span>
+          </div>
+        </div>
 
-      <div className="flex flex-col gap-y-4 pl-8.5">
-        <Response>{content}</Response>
-        {fragment && type === MessageType.RESULT && (
-          <FragmentCard
-            fragment={fragment}
-            isActiveFragment={isActiveFragment}
-            onFragmentClick={onFragmentClick}
-          />
-        )}
+        <div className="flex flex-col gap-y-6 pl-11">
+          <div className={cn(
+             "prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:my-0 text-[15px]",
+             type === MessageType.ERROR && "text-red-500"
+          )}>
+            <Response>{content}</Response>
+          </div>
+          
+          {fragment && type === MessageType.RESULT && (
+            <div className="mt-4 flex flex-col gap-3">
+              <AgentActivityBlock files={parseFragmentFiles(fragment.files)} />
+              <FragmentCard
+                fragment={fragment}
+                isActiveFragment={isActiveFragment}
+                onFragmentClick={onFragmentClick}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -172,7 +225,7 @@ export default function MessageCard({
   }
 
   return (
-    <div className="mt-5">
+    <div className="w-full">
       <UserMessage content={content} />
     </div>
   );

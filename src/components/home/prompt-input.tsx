@@ -55,7 +55,7 @@ export function PromptInput() {
 
     createProject(prompt, {
       onSuccess: (project) => {
-        router.push(`/projects/${project.id}`);
+        router.push(`/root/projects/${project.id}`);
       },
       onError: (error) => {
         toast.error(error.message);

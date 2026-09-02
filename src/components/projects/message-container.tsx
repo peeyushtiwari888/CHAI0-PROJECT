@@ -15,6 +15,8 @@ import { MessageRole } from "@/generated/prisma/enums";
 import MessageCard from "./message-card";
 import MessageForm from "./message-form";
 import MessageLoading from "./message-loader";
+import { Chai0Mark } from "@/components/brand/chai0-logo";
+import { AlertCircle } from "lucide-react";
 
 /**
  * Scrollable list of a project's messages plus the composer.
@@ -56,7 +58,7 @@ export default function MessageContainer({
 
   useEffect(() => {
     const lastAssistantMessage = messages?.findLast(
-      (message) => message.role === MessageRole.ASSISTANT
+      (message: any) => message.role === MessageRole.ASSISTANT
     );
 
     if (
@@ -85,8 +87,19 @@ export default function MessageContainer({
 
   if (isError) {
     return (
-      <div className="flex h-full items-center justify-center text-red-500">
-        Error: {error?.message || "Failed to load messages"}
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-6">
+        <div className="flex flex-col items-center text-center max-w-sm">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10">
+            <AlertCircle className="size-6 text-destructive" />
+          </div>
+          <h3 className="text-lg font-medium text-foreground mb-2">Something went wrong</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            {error?.message || "We couldn't load your project messages."}
+          </p>
+          <p className="text-xs text-muted-foreground/60">
+            Please try refreshing the page or navigating back to your dashboard.
+          </p>
+        </div>
       </div>
     );
   }
@@ -94,12 +107,26 @@ export default function MessageContainer({
   if (!messages || messages.length === 0) {
     return (
       <div className="flex min-h-0 flex-1 flex-col">
-        <div className="flex flex-1 items-center justify-center text-muted-foreground">
-          No messages yet. Start a conversation!
+        <div className="flex flex-1 flex-col items-center justify-center text-center p-6 text-muted-foreground">
+          <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-primary/10 shadow-sm border border-primary/20">
+             <Chai0Mark className="size-6 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold text-foreground mb-2 tracking-tight">What do you want to build?</h3>
+          <p className="max-w-md text-sm text-muted-foreground/80 leading-relaxed">
+            Describe your idea and Chai0 will help you turn it into a working full-stack application.
+          </p>
         </div>
-        <div className="relative p-3 pt-1">
-          <div className="pointer-events-none absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-transparent to-background" />
-          <MessageForm projectId={projectId} />
+        <div className="relative pt-1">
+          <div className="pointer-events-none absolute -top-8 left-0 right-0 h-8 bg-gradient-to-b from-transparent to-background/50" />
+          <MessageForm 
+            projectId={projectId} 
+            placeholder="Describe what you want to build..."
+            suggestions={[
+              "Create a modern SaaS analytics dashboard",
+              "Build a responsive landing page",
+              "Design a personal portfolio with a blog"
+            ]}
+          />
         </div>
       </div>
     );
@@ -109,9 +136,9 @@ export default function MessageContainer({
   const isLastMessageUser = lastMessage.role === MessageRole.USER;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        {messages.map((message) => (
+    <div className="flex min-h-0 flex-1 flex-col relative">
+      <div className="min-h-0 flex-1 overflow-y-auto pb-10">
+        {messages.map((message: any) => (
           <MessageCard
             key={message.id}
             content={message.content}
@@ -123,13 +150,26 @@ export default function MessageContainer({
             type={message.type}
           />
         ))}
-        {isLastMessageUser && <MessageLoading />}
-        <div ref={bottomRef} />
+        {isLastMessageUser && (
+          <div className="px-4 py-8 bg-muted/5 border-y border-border/20">
+             <div className="mx-auto flex w-full max-w-3xl">
+                <MessageLoading />
+             </div>
+          </div>
+        )}
+        <div ref={bottomRef} className="h-4" />
       </div>
 
-      <div className="relative p-2 pt-1">
-        <div className="pointer-events-none absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-transparent to-background" />
-        <MessageForm projectId={projectId} />
+      <div className="relative shrink-0 pt-2 bg-gradient-to-t from-background via-background/95 to-transparent">
+        <MessageForm 
+          projectId={projectId} 
+          placeholder="Ask Chai0 to change your application..."
+          suggestions={isLastMessageUser ? [] : [
+            "Add mobile responsiveness",
+            "Improve the layout",
+            "Add a dark mode toggle"
+          ]}
+        />
       </div>
     </div>
   );
