@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ArrowUp, ChevronDown, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
@@ -23,9 +24,18 @@ import { useCreateProject } from "@/features/projects/hooks/projects";
 export function PromptInput() {
   const [prompt, setPrompt] = useState("");
   const router = useRouter();
+  const { isSignedIn, isLoaded } = useUser();
   const { mutate: createProject, isPending } = useCreateProject();
 
   function handleSubmit() {
+    if (!isLoaded) return;
+
+    if (!isSignedIn) {
+      toast.error("Please sign in before creating a project.");
+      router.push("/sign-in");
+      return;
+    }
+
     createProject(prompt, {
       onSuccess: (project) => {
         router.push(`/projects/${project.id}`);
