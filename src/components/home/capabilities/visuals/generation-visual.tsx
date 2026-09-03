@@ -6,7 +6,7 @@ export function GenerationVisual() {
   return (
     <div className="flex h-[350px] sm:h-[400px] w-full flex-col justify-between overflow-hidden rounded-2xl border border-border/50 bg-background/50 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-md hover:shadow-primary/5 hover:border-primary/20 group">
       <div className="p-6 md:p-8 shrink-0">
-        <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground">Describe it. Chai0 writes it.</h3>
+        <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground">Describe it. CodePilot writes it.</h3>
         <p className="text-sm text-muted-foreground max-w-md">
           Turn natural language into complex React components instantly. No more starting from scratch.
         </p>

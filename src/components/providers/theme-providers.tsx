@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-type Theme = "light" | "dark" | "system"
+type Theme = "light" | "dark"
 
 type ThemeContextValue = {
   theme: Theme
@@ -34,7 +34,7 @@ export function ThemeProvider({
     }
 
     const storedTheme = window.localStorage.getItem("theme") as Theme | null
-    if (storedTheme === "light" || storedTheme === "dark" || storedTheme === "system") {
+    if (storedTheme === "light" || storedTheme === "dark") {
       return storedTheme
     }
 
@@ -42,9 +42,7 @@ export function ThemeProvider({
   })
 
   React.useEffect(() => {
-    const resolvedTheme = theme === "system"
-      ? window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-      : theme
+    const resolvedTheme = theme
 
     document.documentElement.classList.toggle("dark", resolvedTheme === "dark")
     document.documentElement.style.colorScheme = resolvedTheme

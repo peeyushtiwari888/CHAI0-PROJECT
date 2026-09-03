@@ -23,7 +23,7 @@ export function FinalCTASection() {
             with a sentence.
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Stop staring at the blank page. Describe what you want to build and let Chai0 turn your idea into a working application.
+            Stop staring at the blank page. Describe what you want to build and let CodePilot turn your idea into a working application.
           </p>
         </RevealOnScroll>
 

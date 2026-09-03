@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronLeftIcon, SunMoonIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import { Chai0Mark } from "@/components/brand/chai0-logo";
+import { CodePilotMark } from "@/components/brand/codepilot-logo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -53,7 +53,7 @@ export default function ProjectHeader({ projectId }: { projectId: string }) {
       {/* Left: Branding & Project Name */}
       <div className="flex items-center gap-2">
         <Link href="/" className="hover:opacity-80 transition-opacity flex items-center">
-          <Chai0Mark className="h-6 w-auto shrink-0" />
+          <CodePilotMark className="h-6 w-auto shrink-0" />
         </Link>
         
         <span className="text-muted-foreground/40 font-light text-lg">/</span>

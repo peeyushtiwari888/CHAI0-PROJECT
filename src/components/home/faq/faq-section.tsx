@@ -18,7 +18,7 @@ export function FAQSection() {
                <MessageCircleQuestion className="size-4" /> Questions, Answered
              </p>
              <h2 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl mb-6">
-               Still wondering how Chai0 works?
+               Still wondering how CodePilot works?
              </h2>
              <p className="text-lg text-muted-foreground mb-10">
                Everything you need to know before turning your next idea into an application.

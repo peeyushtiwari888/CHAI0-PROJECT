@@ -18,7 +18,7 @@ export function ValueVisual() {
            Don't pay for AI.<br />Pay for speed.
          </h3>
          <p className="text-sm text-muted-foreground leading-relaxed">
-           Chai0 collapses the distance between your idea and a working prototype. Days of scaffolding and boilerplate are reduced to a single prompt.
+           CodePilot collapses the distance between your idea and a working prototype. Days of scaffolding and boilerplate are reduced to a single prompt.
          </p>
       </div>
 

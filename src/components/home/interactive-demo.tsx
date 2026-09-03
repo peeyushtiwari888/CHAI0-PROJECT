@@ -48,8 +48,8 @@ export function InteractiveDemo() {
         setDemoState("building");
       }
     };
-    window.addEventListener("chai0:try-prompt", handleTryPrompt);
-    return () => window.removeEventListener("chai0:try-prompt", handleTryPrompt);
+    window.addEventListener("codepilot:try-prompt", handleTryPrompt);
+    return () => window.removeEventListener("codepilot:try-prompt", handleTryPrompt);
   }, []);
 
   // Handle the building animation sequence
@@ -116,7 +116,7 @@ export function InteractiveDemo() {
           From idea to working application
         </p>
         <p className="max-w-2xl text-lg text-muted-foreground">
-          Describe what you want. Chai0&apos;s AI agent turns your idea into a working application you can see, explore, and iterate on.
+          Describe what you want. CodePilot&apos;s AI agent turns your idea into a working application you can see, explore, and iterate on.
         </p>
       </div>
 
@@ -131,7 +131,7 @@ export function InteractiveDemo() {
           </div>
           <div className="text-xs font-medium text-muted-foreground flex items-center gap-2">
             <Sparkles className="size-3 text-primary" />
-            Chai0 Workspace
+            CodePilot Workspace
           </div>
           <div className="w-12" />
         </div>
@@ -152,7 +152,7 @@ export function InteractiveDemo() {
             <div className="flex flex-1 flex-col gap-4 mb-8">
               {demoState === "idle" ? (
                 <div className="flex flex-col gap-3 text-sm animate-in fade-in duration-500">
-                  <p className="text-muted-foreground mb-2">Select an example to see how Chai0 works:</p>
+                  <p className="text-muted-foreground mb-2">Select an example to see how CodePilot works:</p>
                   {examplePrompts.map((example) => (
                     <button
                       key={example.id}
@@ -229,7 +229,7 @@ export function InteractiveDemo() {
                     />
                   </div>
                   <Button onClick={handleBuild} className="w-full rounded-full shadow-md transition-transform hover:scale-105 active:scale-95">
-                    Build with Chai0 <ChevronRight className="ml-1 size-4" />
+                    Build with CodePilot <ChevronRight className="ml-1 size-4" />
                   </Button>
                 </>
               ) : (
@@ -251,7 +251,7 @@ export function InteractiveDemo() {
               <Layout className="mb-4 size-12 text-muted-foreground/30" />
               <h3 className="text-lg font-medium text-foreground/70">Ready to build</h3>
               <p className="mt-2 max-w-sm text-sm text-muted-foreground/60">
-                Select a prompt on the left and click "Build with Chai0" to see the AI agent in action.
+                Select a prompt on the left and click "Build with CodePilot" to see the AI agent in action.
               </p>
             </div>
 

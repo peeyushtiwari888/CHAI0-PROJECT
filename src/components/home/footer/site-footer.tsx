@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Mountain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { footerNavigation } from "./footer-data";
+import { CodePilotMark } from "@/components/brand/codepilot-logo";
 
 export function SiteFooter() {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -33,10 +34,7 @@ export function SiteFooter() {
           {/* Brand Column */}
           <div className="flex flex-col lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4 group w-fit">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <Mountain className="size-4 text-primary" />
-              </div>
-              <span className="font-bold text-xl tracking-tight">Chai0</span>
+              <CodePilotMark className="h-12 w-auto" />
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
               Build the future from a prompt. Turn ideas into working applications with AI.
@@ -82,7 +80,7 @@ export function SiteFooter() {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Chai0. All rights reserved.
+            &copy; {new Date().getFullYear()} CodePilot. All rights reserved.
           </p>
           {/* Note: Terms/Privacy excluded intentionally per constraints to avoid fake routes */}
         </div>

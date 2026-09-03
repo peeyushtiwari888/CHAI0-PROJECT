@@ -62,11 +62,6 @@ export function CommandPalette() {
             <span>Dark Theme</span>
             {theme === "dark" && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
           </CommandItem>
-          <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-            <Monitor className="mr-2 h-4 w-4" />
-            <span>System Theme</span>
-            {theme === "system" && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
-          </CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>

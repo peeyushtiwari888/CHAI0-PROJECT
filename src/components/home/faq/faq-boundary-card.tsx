@@ -15,10 +15,10 @@ export function FAQBoundaryCard() {
         
         <div className="flex flex-col">
           <h4 className="text-base font-semibold text-foreground mb-2">
-            Know the boundaries.
+            Less Boilerplate. More Breakthroughs.
           </h4>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            AI accelerates development, but developers remain in control. Chai0 is incredible at scaffolding components, writing UIs, and wiring up logic—but complex, highly specific architectural decisions will still require your oversight and iteration.
+            AI accelerates development, but developers remain in control. CodePilot is incredible at scaffolding components, writing UIs, and wiring up logic—but complex, highly specific architectural decisions will still require your oversight and iteration.
           </p>
         </div>
       </div>

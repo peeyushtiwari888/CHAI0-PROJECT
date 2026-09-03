@@ -15,13 +15,13 @@ export const faqData: FAQCategory[] = [
     items: [
       {
         id: "workflow",
-        question: "How does Chai0 build an app?",
-        answer: "Chai0 passes your natural language prompt through an AI agent workflow. The agent generates standard React components, wires them together, and outputs a structured project directory. It then runs this code in an isolated environment to provide a live preview."
+        question: "How does CodePilot build an app?",
+        answer: "CodePilot passes your natural language prompt through an AI agent workflow. The agent generates standard React components, wires them together, and outputs a structured project directory. It then runs this code in an isolated environment to provide a live preview."
       },
       {
         id: "iteration",
         question: "Can I iterate after the first generation?",
-        answer: "Yes. Chai0 is built for continuous iteration. Once the initial app is generated, you can use the chat interface to ask for specific layout tweaks, color changes, or new components. The agent updates the files and refreshes the preview."
+        answer: "Yes. CodePilot is built for continuous iteration. Once the initial app is generated, you can use the chat interface to ask for specific layout tweaks, color changes, or new components. The agent updates the files and refreshes the preview."
       }
     ]
   },
@@ -31,7 +31,7 @@ export const faqData: FAQCategory[] = [
       {
         id: "export",
         question: "Can I export the generated code?",
-        answer: "Absolutely. Chai0 doesn't lock you into a proprietary format. The generated files are standard React components (often using Tailwind CSS) that you can easily copy and paste into your own local codebase."
+        answer: "Absolutely. CodePilot doesn't lock you into a proprietary format. The generated files are standard React components (often using Tailwind CSS) that you can easily copy and paste into your own local codebase."
       },
       {
         id: "preview",
@@ -46,7 +46,7 @@ export const faqData: FAQCategory[] = [
       {
         id: "async",
         question: "What happens if a complex build takes a long time?",
-        answer: "Chai0 uses asynchronous background queues (powered by Inngest) to process heavy generation tasks. If dependency installation or AI generation takes extra time, the interface won't freeze—it safely processes the task and notifies you when it's ready."
+        answer: "CodePilot uses asynchronous background queues (powered by Inngest) to process heavy generation tasks. If dependency installation or AI generation takes extra time, the interface won't freeze—it safely processes the task and notifies you when it's ready."
       },
       {
         id: "errors",

@@ -18,7 +18,7 @@ export function TrustSection() {
           See what your AI is doing.
         </h2>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-          From generated files to a running preview, Chai0 keeps the development workflow visible instead of hiding everything behind a black box.
+          From generated files to a running preview, CodePilot keeps the development workflow visible instead of hiding everything behind a black box.
         </p>
       </RevealOnScroll>
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { Chai0Logo } from "@/components/brand/chai0-logo";
+import { CodePilotLogo } from "@/components/brand/codepilot-logo";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -58,7 +58,7 @@ export function GlassNavbar() {
         {/* LEFT */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center transition-opacity hover:opacity-80">
-            <Chai0Logo className="gap-2" />
+            <CodePilotLogo className="gap-2" />
           </Link>
         </div>
 
@@ -120,7 +120,7 @@ export function GlassNavbar() {
                   <SheetTitle>Navigation Menu</SheetTitle>
                 </SheetHeader>
                 <div className="flex items-center justify-between">
-                  <Chai0Logo className="gap-2" />
+                  <CodePilotLogo className="gap-2" />
                   <ModeToggle />
                 </div>
                 <div className="flex flex-col gap-4">

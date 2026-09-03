@@ -51,7 +51,7 @@ export function ProjectGrid() {
         <FolderGit2 className="size-12 text-muted-foreground/50 mb-4" />
         <h3 className="text-lg font-medium text-foreground mb-1">No projects yet</h3>
         <p className="text-sm text-muted-foreground max-w-sm">
-          Describe what you want to build above, and Chai0 will create your first application.
+          Describe what you want to build above, and CodePilot will create your first application.
         </p>
       </div>
     );

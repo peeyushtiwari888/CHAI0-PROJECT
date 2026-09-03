@@ -20,7 +20,7 @@ export function GeneratedShowcase() {
     // Dispatch custom event to trigger Phase 2 interaction
     setTimeout(() => {
       window.dispatchEvent(
-        new CustomEvent("chai0:try-prompt", {
+        new CustomEvent("codepilot:try-prompt", {
           detail: { category: activeApp.category },
         })
       );
@@ -32,14 +32,14 @@ export function GeneratedShowcase() {
       {/* Section Header */}
       <RevealOnScroll className="flex flex-col items-center text-center mb-16">
         <p className="mb-4 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md">
-          Built with Chai0
+          Built with CodePilot
         </p>
         <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl">
           Whatever you imagine, <br className="hidden sm:block" />
           start with a prompt.
         </h2>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-          Give Chai0 an idea and build everything from dashboards and SaaS products to portfolios, stores, and AI-powered tools.
+          Give CodePilot an idea and build everything from dashboards and SaaS products to portfolios, stores, and AI-powered tools.
         </p>
       </RevealOnScroll>
 

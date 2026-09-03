@@ -17,7 +17,7 @@ export function AgentTerminal({ isActive }: AgentTerminalProps) {
       
       const sequence = [
         { text: "$ npm run dev", delay: 200 },
-        { text: "> chai0-app@0.1.0 dev", delay: 600 },
+        { text: "> codepilot-app@0.1.0 dev", delay: 600 },
         { text: "> next dev", delay: 800 },
         { text: "▲ Next.js 14.1.0", delay: 1200 },
         { text: "- Local:        http://localhost:3000", delay: 1300 },

@@ -61,7 +61,7 @@ export function ShowcaseBrowser({ activeCategory, appId }: ShowcaseBrowserProps)
         {/* Address Bar */}
         <div className="flex h-7 flex-1 max-w-md items-center justify-center gap-2 rounded-md bg-background/50 border border-border/50 px-3 text-xs text-muted-foreground shadow-sm">
           <Lock className="size-3 opacity-70" />
-          <span className="font-medium">{appId}.chai0.app</span>
+          <span className="font-medium">{appId}.codepilot.app</span>
         </div>
 
         {/* Right Actions */}

@@ -15,7 +15,7 @@ import { MessageRole } from "@/generated/prisma/enums";
 import MessageCard from "./message-card";
 import MessageForm from "./message-form";
 import MessageLoading from "./message-loader";
-import { Chai0Mark } from "@/components/brand/chai0-logo";
+import { CodePilotMark } from "@/components/brand/codepilot-logo";
 import { AlertCircle } from "lucide-react";
 
 /**
@@ -109,11 +109,11 @@ export default function MessageContainer({
       <div className="flex min-h-0 flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-center text-center p-6 text-muted-foreground">
           <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-primary/10 shadow-sm border border-primary/20">
-             <Chai0Mark className="size-6 text-primary" />
+             <CodePilotMark className="h-6 w-auto" />
           </div>
           <h3 className="text-xl font-semibold text-foreground mb-2 tracking-tight">What do you want to build?</h3>
           <p className="max-w-md text-sm text-muted-foreground/80 leading-relaxed">
-            Describe your idea and Chai0 will help you turn it into a working full-stack application.
+            Describe your idea and CodePilot will help you turn it into a working full-stack application.
           </p>
         </div>
         <div className="relative pt-1">
@@ -163,7 +163,7 @@ export default function MessageContainer({
       <div className="relative shrink-0 pt-2 bg-gradient-to-t from-background via-background/95 to-transparent">
         <MessageForm 
           projectId={projectId} 
-          placeholder="Ask Chai0 to change your application..."
+          placeholder="Ask CodePilot to change your application..."
           suggestions={isLastMessageUser ? [] : [
             "Add mobile responsiveness",
             "Improve the layout",

@@ -53,7 +53,7 @@ export function AgentExperience() {
           An agent that builds.
         </h2>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-          Chai0 doesn't just output raw React components. It acts as an autonomous developer—planning architecture, writing files, and running them in a secure sandbox.
+          CodePilot doesn't just output raw React components. It acts as an autonomous developer—planning architecture, writing files, and running them in a secure sandbox.
         </p>
       </RevealOnScroll>
 
@@ -68,7 +68,7 @@ export function AgentExperience() {
             <div className="size-3 rounded-full bg-border" />
           </div>
           <div className="text-xs font-medium text-foreground flex items-center gap-2">
-            CHAI0 AGENT 
+            CODEPILOT AGENT 
             <span className="flex items-center gap-1.5 ml-2 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[9px] uppercase tracking-wider font-bold">
               <span className={`size-1.5 rounded-full bg-primary ${currentState !== 'idle' ? 'animate-pulse' : ''}`} />
               {currentState === "idle" ? "READY" : "ACTIVE"}
@@ -160,7 +160,7 @@ export function AgentExperience() {
              <RotateCcw className="size-5" />
            </div>
            <h4 className="text-lg font-semibold text-foreground mb-2">Iterate Naturally</h4>
-           <p className="text-sm text-muted-foreground">Keep refining your application through conversation. Just tell Chai0 what to tweak next.</p>
+           <p className="text-sm text-muted-foreground">Keep refining your application through conversation. Just tell CodePilot what to tweak next.</p>
         </div>
       </RevealOnScroll>
     </section>

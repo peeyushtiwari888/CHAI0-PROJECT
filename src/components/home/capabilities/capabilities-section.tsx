@@ -19,7 +19,7 @@ export function CapabilitiesSection() {
           turn an idea into software.
         </h2>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-          From generating code to running your application, Chai0 brings the essential building blocks of AI-powered development into one workflow.
+          From generating code to running your application, CodePilot brings the essential building blocks of AI-powered development into one workflow.
         </p>
       </RevealOnScroll>
 

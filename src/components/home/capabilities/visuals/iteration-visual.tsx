@@ -27,7 +27,7 @@ export function IterationVisual() {
       <div className="p-6 shrink-0">
         <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground">Iterate naturally.</h3>
         <p className="text-sm text-muted-foreground max-w-sm">
-          Keep refining your application through conversation. Just tell Chai0 what to tweak next.
+          Keep refining your application through conversation. Just tell CodePilot what to tweak next.
         </p>
       </div>
       

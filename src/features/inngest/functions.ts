@@ -48,9 +48,12 @@ export const codeAgentFunction = inngest.createFunction(
           projectId: event.data.projectId
         },
         orderBy: {
-          createdAt: "asc"
-        }
+          createdAt: "desc"
+        },
+        take: 10
       });
+
+      messages.reverse();
 
       return messages.map((message) => ({
         type: "text" as const,
@@ -70,7 +73,7 @@ export const codeAgentFunction = inngest.createFunction(
     const codeAgent = createAgent({
       name: "code-agent",
       system: PROMPT,
-      model: gemini({ model: "gemini-3.7-flash", apiKey: process.env.GEMINI_API_KEY! }),
+      model: gemini({ model: "gemini-3.8-flash", apiKey: process.env.GEMINI_API_KEY! }),
       tools: [
         createTool({
           name: "terminal",
@@ -133,7 +136,7 @@ export const codeAgentFunction = inngest.createFunction(
                 network.state.data.files = updatedFiles;
               }
 
-              return updatedFiles;
+              return `Successfully updated ${files.length} file(s).`;
             } catch (error) {
               console.error("Error updating files:", error);
               throw error;
@@ -208,7 +211,7 @@ export const codeAgentFunction = inngest.createFunction(
     const makeTextAgent = (name: string, system: string) => createAgent({
       name,
       system,
-      model: gemini({ model: "gemini-3.7-flash", apiKey: process.env.GEMINI_API_KEY! }),
+      model: gemini({ model: "gemini-3.8-flash", apiKey: process.env.GEMINI_API_KEY! }),
     });
     
     const fragmentTitleGenerator = makeTextAgent("fragment-title-generator", FRAGMENT_TITLE_PROMPT);

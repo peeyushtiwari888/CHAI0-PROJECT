@@ -1,6 +1,6 @@
 "use client";
 
-import { Chai0Mark } from "@/components/brand/chai0-logo";
+import { CodePilotMark } from "@/components/brand/codepilot-logo";
 import { useEffect, useState } from "react";
 
 const loadingMessages = [
@@ -77,10 +77,10 @@ export default function MessageLoading() {
       <div className="mx-auto flex w-full max-w-3xl flex-col">
         <div className="mb-6 flex items-center gap-3">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.3)] border border-primary/40 animate-pulse">
-            <Chai0Mark className="size-4 text-primary" />
+            <CodePilotMark className="h-4 w-auto" />
           </div>
           <div className="flex flex-col">
-             <span className="text-sm font-semibold text-foreground">Chai0 Agent</span>
+             <span className="text-sm font-semibold text-foreground">CodePilot Agent</span>
              <span className="text-[10px] uppercase tracking-wider text-primary font-medium flex items-center gap-1.5">
                <span className="size-1.5 rounded-full bg-primary animate-ping" /> Working...
              </span>

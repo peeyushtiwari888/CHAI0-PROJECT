@@ -70,7 +70,7 @@ export function InteractivePromptDemo() {
              <div className="absolute bottom-2 right-2">
                <Button asChild size="sm" className="rounded-full shadow-md gap-2 pl-4 pr-3 transition-transform hover:scale-105 active:scale-95">
                  <Link href="/root">
-                   Build with Chai0 <Send className="size-3.5" />
+                   Build with CodePilot <Send className="size-3.5" />
                  </Link>
                </Button>
              </div>

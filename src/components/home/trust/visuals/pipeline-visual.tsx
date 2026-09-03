@@ -26,7 +26,7 @@ export function PipelineVisual() {
       <div className="p-6 md:p-8 shrink-0">
         <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground">A transparent architecture.</h3>
         <p className="text-sm text-muted-foreground max-w-md">
-          Chai0 doesn't hide its workflow. From prompt to live preview, you can trace exactly how your application is being built and executed.
+          CodePilot doesn't hide its workflow. From prompt to live preview, you can trace exactly how your application is being built and executed.
         </p>
       </div>
       

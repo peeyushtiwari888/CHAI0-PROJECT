@@ -7,7 +7,7 @@ export function FilesVisual() {
       <div className="p-6 shrink-0">
         <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground">Work with real projects.</h3>
         <p className="text-sm text-muted-foreground max-w-sm">
-          Chai0 doesn't just output a single snippet. It builds proper React architecture with components, layouts, and utilities.
+          CodePilot doesn't just output a single snippet. It builds proper React architecture with components, layouts, and utilities.
         </p>
       </div>
       

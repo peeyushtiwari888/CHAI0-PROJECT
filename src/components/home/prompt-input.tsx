@@ -67,7 +67,7 @@ export function PromptInput() {
     setPrompt(nextPrompt);
   }
 
-  const currentPlaceholder = allPromptTemplates[placeholderIndex]?.prompt || "Ask chai0 to build...";
+  const currentPlaceholder = allPromptTemplates[placeholderIndex]?.prompt || "Ask codepilot to build...";
 
   return (
     <div className="flex w-full flex-col gap-6">

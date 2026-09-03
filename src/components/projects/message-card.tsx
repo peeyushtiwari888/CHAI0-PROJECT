@@ -11,7 +11,7 @@ import type { Fragment } from "@/generated/prisma/client";
 import { MessageRole, MessageType } from "@/generated/prisma/enums";
 import { format } from "date-fns";
 import { ChevronRightIcon, Code2Icon, FileCode2Icon, CheckCircle2Icon } from "lucide-react";
-import { Chai0Mark } from "@/components/brand/chai0-logo";
+import { CodePilotMark } from "@/components/brand/codepilot-logo";
 
 function AgentActivityBlock({ files }: { files: Record<string, string> }) {
   const filePaths = Object.keys(files);
@@ -112,7 +112,7 @@ function UserMessage({ content }: { content: string }) {
 /**
  * A message rendered by the assistant.
  *
- * Shows the chai0 mark, a hover-revealed timestamp, the markdown response, and —
+ * Shows the codepilot mark, a hover-revealed timestamp, the markdown response, and —
  * for successful results — a {@link FragmentCard} linking to the generated app.
  * Error-type messages are styled in red.
  *
@@ -148,10 +148,10 @@ function AssistantMessage({
       <div className="mx-auto flex w-full max-w-3xl flex-col">
         <div className="mb-4 flex items-center gap-3">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 shadow-sm border border-primary/20">
-            <Chai0Mark className="size-4 text-primary" />
+            <CodePilotMark className="h-4 w-auto" />
           </div>
           <div className="flex flex-col">
-             <span className="text-sm font-semibold text-foreground">Chai0 Agent</span>
+             <span className="text-sm font-semibold text-foreground">CodePilot Agent</span>
              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">
                {format(new Date(createdAt), "HH:mm")}
              </span>

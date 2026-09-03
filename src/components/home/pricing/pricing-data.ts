@@ -14,7 +14,7 @@ export const pricingPlans: PricingPlan[] = [
   {
     id: "free",
     name: "Free",
-    description: "For exploring Chai0 and building simple applications.",
+    description: "For exploring CodePilot and building simple applications.",
     price: "$0",
     features: [
       { name: "Standard AI Code Generation", included: true },
