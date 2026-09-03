@@ -140,7 +140,7 @@ export default function MessageContainer({
       {/* AI Agent Header */}
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-border/40 px-4 bg-background z-10">
         <h3 className="text-[12px] font-semibold text-foreground uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
-          <span className="text-primary/70">✦</span> AI Agent
+          <span className="text-primary/70">✦</span> CodePilot Agent
         </h3>
         <div className="flex items-center gap-2">
           {isLastMessageUser ? (
