@@ -29,7 +29,7 @@ export const processTask = inngest.createFunction(
 );
 
 export const codeAgentFunction = inngest.createFunction(
-  { id: "code-agent", triggers: { event: "code-agent/run" } },
+  { id: "code-agent", triggers: { event: "code-agent/run" }, retries: 0 },
   async ({ event, step }) => {
     const sandboxTemplate = process.env.E2B_TEMPLATE_ID || "c0-build";
 
@@ -37,6 +37,7 @@ export const codeAgentFunction = inngest.createFunction(
       const sandbox = await Sandbox.create({
         template: sandboxTemplate,
         apiKey: process.env.E2B_API_KEY,
+        timeoutMs: 1000 * 60 * 30, // 30 minutes
       });
 
       return sandbox.sandboxId;
@@ -88,7 +89,7 @@ export const codeAgentFunction = inngest.createFunction(
               const sandbox = await Sandbox.connect(sandboxId);
 
               const result = await sandbox.commands.run(command, {
-                timeoutMs: 60000,
+                timeoutMs: 15000,
                 onStdout: (data: string) => {
                   buffers.stdout += data;
                 },
@@ -208,25 +209,16 @@ export const codeAgentFunction = inngest.createFunction(
     const result = await network.run(inputValue, { state });
     const { summary = "", files = {} } = result.state?.data || {};
 
-    const makeTextAgent = (name: string, system: string) => createAgent({
-      name,
-      system,
-      model: gemini({ model: "gemini-3.8-flash", apiKey: process.env.GEMINI_API_KEY! }),
-    });
-    
-    const fragmentTitleGenerator = makeTextAgent("fragment-title-generator", FRAGMENT_TITLE_PROMPT);
-    const responseGenerator = makeTextAgent("response-generator", RESPONSE_PROMPT);
-
     const finalSummary = summary.trim() ? summary : `The user requested: ${inputValue}`;
 
-    const fragmentTitleResult = await step.run("generate-fragment-title", () => fragmentTitleGenerator.run(finalSummary));
-    const responseResult = await step.run("generate-response", () => responseGenerator.run(finalSummary));
+    // Generate a simple title based on the user's prompt (first 3 words)
+    const words = inputValue.split(/\s+/).filter(Boolean);
+    let fragmentTitle = words.slice(0, 3).join(" ") || "Untitled";
+    if (words.length > 3) fragmentTitle += "...";
+    fragmentTitle = fragmentTitle.charAt(0).toUpperCase() + fragmentTitle.slice(1);
 
-    const fragmentTitleOutput = fragmentTitleResult?.output || fragmentTitleResult;
-    const responseOutput = responseResult?.output || responseResult;
-
-    const fragmentTitle = agentOutputText(fragmentTitleOutput, "Untitled");
-    const responseText = agentOutputText(responseOutput, "Here you go");
+    // Hardcode a friendly response to save API calls and avoid hangs
+    const responseText = "Done! I've updated the application based on your request. Check out the generated code and preview.";
 
     console.log(files)
 
