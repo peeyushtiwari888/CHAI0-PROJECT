@@ -87,9 +87,9 @@ export default function MessageContainer({
 
   if (isError) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-6">
-        <div className="flex flex-col items-center text-center max-w-sm">
-          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-6 w-full">
+        <div className="flex flex-col items-center text-center w-full max-w-sm overflow-hidden">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10 shrink-0">
             <AlertCircle className="size-6 text-destructive" />
           </div>
           <h3 className="text-lg font-medium text-foreground mb-2">Something went wrong</h3>

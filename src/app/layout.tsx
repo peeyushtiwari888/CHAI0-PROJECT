@@ -41,9 +41,6 @@ export default function RootLayout({
           appearance={{
             elements: {
               logoImage: "h-8 w-auto object-contain",
-            },
-            layout: {
-              logoImageUrl: "/logo.png",
             }
           }}
         >

@@ -50,7 +50,7 @@ export const codeAgentFunction = inngest.createFunction(
         orderBy: {
           createdAt: "desc"
         },
-        take: 10
+        take: 4
       });
 
       messages.reverse();
@@ -190,7 +190,7 @@ export const codeAgentFunction = inngest.createFunction(
     const network = createNetwork({
       name: "code-agent-network",
       agents: [codeAgent],
-      maxIter: 15,
+      maxIter: 3,
       router: async({ network }) => {
         const summary = network.state.data.summary;
 

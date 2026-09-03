@@ -45,7 +45,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
             defaultSize={18}
             minSize={12}
             maxSize={30}
-            className="flex flex-col min-w-[200px]"
+            className="flex flex-col min-w-0 overflow-hidden"
           >
             <WorkspaceSidebar 
               files={activeFragment?.files}
@@ -61,7 +61,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
             defaultSize={35}
             minSize={25}
             maxSize={50}
-            className="flex flex-col bg-muted/10 relative"
+            className="flex flex-col bg-muted/10 relative min-w-0 overflow-hidden"
           >
             <MessageContainer
               projectId={projectId}
