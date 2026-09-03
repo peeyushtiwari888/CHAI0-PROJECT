@@ -44,7 +44,10 @@ export function ProjectView({ projectId }: { projectId: string }) {
             />
           </ResizablePanel>
 
-          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
+          <ResizableHandle 
+            withHandle 
+            className="w-px bg-border hover:bg-primary/40 hover:w-1 transition-all duration-300 ease-in-out cursor-col-resize active:bg-primary/60" 
+          />
 
           {/* Right Panel: Preview & Code */}
           <ResizablePanel defaultSize={65} minSize={30} className="flex flex-col min-w-0 min-h-0 overflow-hidden">
