@@ -118,16 +118,7 @@ export default function MessageForm({
           }}
         />
 
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-3">
-          <div className="flex items-center gap-2">
-            <span className="hidden sm:inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
-              <kbd className="font-sans">Enter</kbd> to submit
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
-              <kbd className="font-sans">Shift + Enter</kbd> for newline
-            </span>
-          </div>
-          
+        <div className="mt-3 flex flex-wrap items-center justify-end gap-3">
           <Button
             className={cn(
               "h-8 rounded-full px-4 text-xs font-semibold shadow-sm transition-all ml-auto",
