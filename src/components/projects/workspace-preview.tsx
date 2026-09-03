@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { WorkspaceSidebar } from "./workspace-sidebar";
 import { CodeView } from "./code-view";
 import FragmentWeb from "./fragment-web";
 import type { ProjectFragment } from "@/features/projects/fragment-types";
