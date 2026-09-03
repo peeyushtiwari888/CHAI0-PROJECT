@@ -18,7 +18,7 @@ export function WorkspaceSidebar({ files, selectedFile, onSelectFile }: Workspac
   }, [files]);
 
   return (
-    <div className="flex h-full flex-col bg-background/50 border-r border-border/40 min-w-[180px]">
+    <div className="flex h-full w-full min-w-0 flex-col bg-background/50 border-r border-border/40">
       <div className="flex h-12 shrink-0 items-center justify-between px-4 border-b border-border/40">
         <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
           Project Files

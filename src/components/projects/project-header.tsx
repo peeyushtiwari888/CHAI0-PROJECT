@@ -65,7 +65,7 @@ export default function ProjectHeader({ projectId }: { projectId: string }) {
               size="sm"
               className="px-2 transition-colors hover:bg-muted/50 focus-visible:ring-0 text-foreground"
             >
-              <span className="text-sm font-semibold capitalize tracking-tight">
+              <span className="text-sm font-semibold capitalize tracking-tight max-w-[120px] sm:max-w-[200px] truncate">
                 {isPending ? (
                   <Spinner className="size-3" />
                 ) : (

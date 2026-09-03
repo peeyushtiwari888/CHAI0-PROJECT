@@ -114,20 +114,20 @@ export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTa
         value={tabState}
         onValueChange={(value) => setTabState(value as "preview" | "code")}
       >
-        <div className="flex h-10 w-full shrink-0 items-end border-b border-border/40 px-2 bg-muted/20">
-          <TabsList className="flex h-10 items-center justify-start rounded-none bg-transparent p-0">
+        <div className="flex h-12 w-full shrink-0 items-center border-b border-border/40 px-4 bg-background">
+          <TabsList className="flex h-8 items-center justify-start rounded-md bg-muted/40 p-0.5 border border-border/50">
             <TabsTrigger
               value="preview"
-              className="relative h-10 rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-3 text-sm font-medium text-muted-foreground transition-none hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              className="relative h-7 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               <div className="flex items-center gap-2">
-                <EyeIcon className="size-3.5" />
+                <span className="size-1.5 rounded-full bg-emerald-500/80" />
                 <span>Preview</span>
               </div>
             </TabsTrigger>
             <TabsTrigger
               value="code"
-              className="relative h-10 rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-3 text-sm font-medium text-muted-foreground transition-none hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              className="relative h-7 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               <div className="flex items-center gap-2">
                 <Code className="size-3.5" />
@@ -145,10 +145,13 @@ export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTa
           {activeFragment ? (
             <FragmentWeb data={activeFragment} />
           ) : (
-            <div className="flex h-full flex-col items-center justify-center text-muted-foreground p-4 text-center">
-              <TerminalSquare className="size-12 mb-4 opacity-20" />
-              <h3 className="text-lg font-medium text-foreground mb-2">No preview available</h3>
-              <p className="text-sm">Describe what you want to build to see a live preview.</p>
+            <div className="flex h-full flex-col items-center justify-center text-muted-foreground p-6 text-center bg-muted/5">
+              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-background border border-border/50 shadow-sm">
+                <TerminalSquare className="size-5 text-muted-foreground/60" />
+              </div>
+              <h3 className="text-sm font-medium text-foreground mb-1">No preview available</h3>
+              <p className="text-xs text-muted-foreground max-w-[250px]">Describe what you want to build to see a live preview.</p>
+              <p className="text-[11px] text-muted-foreground/60 mt-4">Start by describing your application in the AI chat.</p>
             </div>
           )}
         </TabsContent>

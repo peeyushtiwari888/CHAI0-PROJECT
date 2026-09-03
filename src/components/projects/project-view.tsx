@@ -34,20 +34,20 @@ export function ProjectView({ projectId }: { projectId: string }) {
   };
 
   return (
-    <div className="flex h-screen flex-col bg-background overflow-hidden">
+    <div className="flex h-[100dvh] flex-col bg-background overflow-hidden">
       {/* Workspace Header - Full Width */}
       <ProjectHeader projectId={projectId} />
 
-      <div className="flex-1 overflow-hidden">
-        <ResizablePanelGroup orientation="horizontal" className="h-full">
+      <div className="flex-1 min-h-0 overflow-hidden">
+        <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
           {/* Left Panel: File Explorer */}
           <ResizablePanel
-            defaultSize={18}
+            defaultSize={20}
             minSize={15}
-            maxSize={30}
+            maxSize={25}
             collapsible={true}
             collapsedSize={0}
-            className="flex flex-col min-w-0 overflow-hidden"
+            className="flex flex-col min-w-[220px] min-h-0 overflow-hidden"
           >
             <WorkspaceSidebar 
               files={activeFragment?.files}
@@ -58,29 +58,29 @@ export function ProjectView({ projectId }: { projectId: string }) {
 
           <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
 
-          {/* Center Panel: Preview & Code */}
-          <ResizablePanel defaultSize={55} minSize={30} className="flex flex-col min-w-[350px]">
-            <WorkspacePreview
-              activeFragment={activeFragment}
-              selectedFile={selectedFile}
-              tabState={tabState}
-              setTabState={setTabState}
-            />
-          </ResizablePanel>
-
-          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
-
-          {/* Right Panel: AI Chat (Process) */}
+          {/* Center Panel: AI Chat (Process) */}
           <ResizablePanel
-            defaultSize={30}
+            defaultSize={35}
             minSize={25}
-            maxSize={50}
-            className="flex flex-col bg-muted/10 relative min-w-[300px] overflow-hidden"
+            maxSize={45}
+            className="flex flex-col bg-muted/10 relative min-w-[320px] min-h-0 overflow-hidden"
           >
             <MessageContainer
               projectId={projectId}
               activeFragment={activeFragment}
               setActiveFragment={setActiveFragment}
+            />
+          </ResizablePanel>
+
+          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
+
+          {/* Right Panel: Preview & Code */}
+          <ResizablePanel defaultSize={45} minSize={30} className="flex flex-col min-w-[350px] min-h-0 overflow-hidden">
+            <WorkspacePreview
+              activeFragment={activeFragment}
+              selectedFile={selectedFile}
+              tabState={tabState}
+              setTabState={setTabState}
             />
           </ResizablePanel>
         </ResizablePanelGroup>

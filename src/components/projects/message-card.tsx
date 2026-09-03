@@ -101,8 +101,8 @@ function FragmentCard({
 
 function UserMessage({ content }: { content: string }) {
   return (
-    <div className="flex w-full justify-end py-6 px-4">
-      <div className="max-w-[85%] rounded-2xl bg-primary/10 px-5 py-3.5 text-[15px] leading-relaxed text-foreground shadow-sm">
+    <div className="flex w-full min-w-0 justify-end py-6 px-4">
+      <div className="max-w-[85%] rounded-2xl bg-primary/10 px-5 py-3.5 text-[15px] leading-relaxed text-foreground shadow-sm break-words whitespace-pre-wrap">
         {content}
       </div>
     </div>
@@ -141,11 +141,11 @@ function AssistantMessage({
   return (
     <div
       className={cn(
-        "group flex w-full flex-col px-4 py-8 bg-muted/5 border-y border-border/20",
+        "group flex w-full min-w-0 flex-col px-4 py-8 bg-muted/5 border-y border-border/20",
         type === MessageType.ERROR && "bg-red-500/5 border-red-500/20"
       )}
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col">
+      <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col">
         <div className="mb-4 flex items-center gap-3">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 shadow-sm border border-primary/20">
             <CodePilotMark className="h-4 w-auto" />
@@ -158,9 +158,9 @@ function AssistantMessage({
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-6 pl-11">
+        <div className="flex flex-col min-w-0 gap-y-6 pl-11">
           <div className={cn(
-             "prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:my-0 text-[15px]",
+             "prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:my-0 prose-pre:overflow-x-auto text-[15px]",
              type === MessageType.ERROR && "text-red-500"
           )}>
             <Response>{content}</Response>
