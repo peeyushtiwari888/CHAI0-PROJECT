@@ -43,8 +43,10 @@ export function ProjectView({ projectId }: { projectId: string }) {
           {/* Left Panel: File Explorer */}
           <ResizablePanel
             defaultSize={18}
-            minSize={12}
+            minSize={15}
             maxSize={30}
+            collapsible={true}
+            collapsedSize={0}
             className="flex flex-col min-w-0 overflow-hidden"
           >
             <WorkspaceSidebar 
@@ -59,7 +61,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
           {/* Center Panel: AI Chat */}
           <ResizablePanel
             defaultSize={35}
-            minSize={25}
+            minSize={30}
             maxSize={50}
             className="flex flex-col bg-muted/10 relative min-w-0 overflow-hidden"
           >
@@ -73,7 +75,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
           <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
 
           {/* Right Panel: Preview & Code */}
-          <ResizablePanel defaultSize={47} minSize={30} className="flex flex-col">
+          <ResizablePanel defaultSize={47} minSize={30} className="flex flex-col min-w-0">
             <WorkspacePreview
               activeFragment={activeFragment}
               selectedFile={selectedFile}

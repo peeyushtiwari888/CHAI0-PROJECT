@@ -108,7 +108,7 @@ export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTa
   const hasFiles = activeFragment?.files && Object.keys(activeFragment.files).length > 0;
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className="flex h-full flex-col bg-background min-w-[350px]">
       <Tabs
         className="flex h-full flex-col"
         value={tabState}

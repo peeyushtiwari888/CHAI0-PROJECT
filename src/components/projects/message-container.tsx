@@ -87,7 +87,7 @@ export default function MessageContainer({
 
   if (isError) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-6 w-full">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-6 w-full min-w-[300px]">
         <div className="flex flex-col items-center text-center w-full max-w-sm overflow-hidden">
           <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10 shrink-0">
             <AlertCircle className="size-6 text-destructive" />
@@ -106,7 +106,7 @@ export default function MessageContainer({
 
   if (!messages || messages.length === 0) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col min-w-[300px]">
         <div className="flex flex-1 flex-col items-center justify-center text-center p-6 text-muted-foreground">
           <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-primary/10 shadow-sm border border-primary/20">
              <CodePilotMark className="h-6 w-auto" />
@@ -136,7 +136,7 @@ export default function MessageContainer({
   const isLastMessageUser = lastMessage.role === MessageRole.USER;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col relative">
+    <div className="flex min-h-0 flex-1 flex-col relative min-w-[300px]">
       <div className="min-h-0 flex-1 overflow-y-auto pb-10">
         {messages.map((message: any) => (
           <MessageCard
