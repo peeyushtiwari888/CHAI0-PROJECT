@@ -69,7 +69,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
 
           <ResizableHandle 
             withHandle 
-            className="hidden md:flex w-px bg-border hover:bg-primary/40 hover:w-1 transition-all duration-300 ease-in-out cursor-col-resize active:bg-primary/60" 
+            className="hidden md:flex w-px bg-border hover:bg-border/80 transition-colors duration-200 ease-in-out cursor-col-resize" 
           />
 
           {/* Right Panel: Preview & Code */}

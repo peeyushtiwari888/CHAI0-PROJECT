@@ -16,7 +16,7 @@ import MessageCard from "./message-card";
 import MessageForm from "./message-form";
 import MessageLoading from "./message-loader";
 import { CodePilotMark } from "@/components/brand/codepilot-logo";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, CheckCircle2Icon } from "lucide-react";
 
 /**
  * Scrollable list of a project's messages plus the composer.
@@ -149,8 +149,8 @@ export default function MessageContainer({
                Building
              </span>
           ) : (
-             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
-               <span className="size-1.5 rounded-full bg-muted-foreground/50" />
+             <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+               <CheckCircle2Icon className="size-3 text-muted-foreground/50" />
                Ready
              </span>
           )}
