@@ -1,10 +1,11 @@
 "use client";
 
-import { Fragment, useState, useCallback } from "react";
+import { Fragment, useState, useCallback, useEffect } from "react";
 import { CopyIcon, CopyCheckIcon, EyeIcon, Code, TerminalSquare } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/ui/hint";
+import { cn } from "@/lib/utils";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -83,13 +84,25 @@ function getLanguageFromExtension(filename: string) {
 
 interface WorkspacePreviewProps {
   activeFragment: ProjectFragment | null;
-  selectedFile: string | null;
-  tabState: "preview" | "code";
-  setTabState: (val: "preview" | "code") => void;
 }
 
-export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTabState }: WorkspacePreviewProps) {
+export function WorkspacePreview({ activeFragment }: WorkspacePreviewProps) {
+  const [tabState, setTabState] = useState<"preview" | "code">("preview");
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [pulse, setPulse] = useState(false);
+
+  useEffect(() => {
+    if (activeFragment?.id) {
+      setPulse(true);
+      const t = setTimeout(() => setPulse(false), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [activeFragment?.id]);
+
+  const handleSelectFile = useCallback((filePath: string) => {
+    setSelectedFile(filePath);
+  }, []);
 
   const handleCopy = useCallback(() => {
     if (selectedFile && activeFragment?.files?.[selectedFile]) {
@@ -140,7 +153,10 @@ export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTa
         {/* PREVIEW TAB */}
         <TabsContent
           value="preview"
-          className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden"
+          className={cn(
+            "mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden transition-all duration-1000",
+            pulse && "shadow-[inset_0_0_0_2px_rgba(var(--primary),0.5)] bg-primary/5"
+          )}
         >
           {activeFragment ? (
             <FragmentWeb data={activeFragment} />
@@ -159,41 +175,52 @@ export function WorkspacePreview({ activeFragment, selectedFile, tabState, setTa
         {/* CODE TAB */}
         <TabsContent
           value="code"
-          className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden bg-[#0a0a0a]"
+          className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden bg-background"
         >
-          {hasFiles && selectedFile && activeFragment.files[selectedFile] ? (
-            <div className="flex h-full flex-col bg-[#0a0a0a]">
-              <div className="flex h-12 shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a0a] px-4">
-                <FileBreadcrumb filePath={selectedFile} />
-                <Hint text="Copy code" side="bottom">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
-                    onClick={handleCopy}
-                  >
-                    {copied ? (
-                      <CopyCheckIcon className="size-4 text-emerald-500" />
-                    ) : (
-                      <CopyIcon className="size-4" />
-                    )}
-                  </Button>
-                </Hint>
-              </div>
-              <div className="min-h-0 flex-1 overflow-auto p-4">
-                <CodeView
-                  code={activeFragment.files[selectedFile]}
-                  lang={getLanguageFromExtension(selectedFile)}
-                />
-              </div>
+          <div className="flex h-full w-full">
+            <div className="w-[240px] shrink-0 border-r border-border/40 hidden md:block h-full">
+              <WorkspaceSidebar 
+                files={activeFragment?.files}
+                selectedFile={selectedFile}
+                onSelectFile={handleSelectFile}
+              />
             </div>
-          ) : (
-            <div className="flex h-full flex-col items-center justify-center text-muted-foreground p-4 text-center bg-background">
-              <Code className="size-12 mb-4 opacity-20" />
-              <h3 className="text-lg font-medium text-foreground mb-2">Code Viewer</h3>
-              <p className="text-sm">Select a file from the explorer to view its contents.</p>
+            <div className="flex-1 min-w-0 flex flex-col bg-[#0a0a0a]">
+              {hasFiles && selectedFile && activeFragment.files[selectedFile] ? (
+                <div className="flex h-full flex-col bg-[#0a0a0a]">
+                  <div className="flex h-12 shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a0a] px-4">
+                    <FileBreadcrumb filePath={selectedFile} />
+                    <Hint text="Copy code" side="bottom">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
+                        onClick={handleCopy}
+                      >
+                        {copied ? (
+                          <CopyCheckIcon className="size-4 text-emerald-500" />
+                        ) : (
+                          <CopyIcon className="size-4" />
+                        )}
+                      </Button>
+                    </Hint>
+                  </div>
+                  <div className="min-h-0 flex-1 overflow-auto p-4">
+                    <CodeView
+                      code={activeFragment.files[selectedFile]}
+                      lang={getLanguageFromExtension(selectedFile)}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="flex h-full flex-col items-center justify-center text-muted-foreground p-4 text-center bg-background">
+                  <Code className="size-12 mb-4 opacity-20" />
+                  <h3 className="text-lg font-medium text-foreground mb-2">Code Viewer</h3>
+                  <p className="text-sm">Select a file from the explorer to view its contents.</p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </TabsContent>
       </Tabs>
     </div>

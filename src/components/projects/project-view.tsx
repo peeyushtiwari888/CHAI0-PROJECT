@@ -22,16 +22,6 @@ export type ProjectFragment = Fragment & {
 
 export function ProjectView({ projectId }: { projectId: string }) {
   const [activeFragment, setActiveFragment] = useState<ProjectFragment | null>(null);
-  const [tabState, setTabState] = useState<"preview" | "code">("preview");
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
-
-  // Auto-switch to Code tab when a file is selected
-  const handleSelectFile = (filePath: string) => {
-    setSelectedFile(filePath);
-    if (tabState !== "code") {
-      setTabState("code");
-    }
-  };
 
   return (
     <div className="flex h-[100dvh] flex-col bg-background overflow-hidden">
@@ -40,25 +30,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
 
       <div className="flex-1 min-h-0 overflow-hidden">
         <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
-          {/* Left Panel: File Explorer */}
-          <ResizablePanel
-            defaultSize={20}
-            minSize={15}
-            maxSize={25}
-            collapsible={true}
-            collapsedSize={0}
-            className="flex flex-col min-w-[220px] min-h-0 overflow-hidden"
-          >
-            <WorkspaceSidebar 
-              files={activeFragment?.files}
-              selectedFile={selectedFile}
-              onSelectFile={handleSelectFile}
-            />
-          </ResizablePanel>
-
-          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
-
-          {/* Center Panel: AI Chat (Process) */}
+          {/* Left Panel: AI Agent (Process) */}
           <ResizablePanel
             defaultSize={35}
             minSize={25}
@@ -75,12 +47,9 @@ export function ProjectView({ projectId }: { projectId: string }) {
           <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
 
           {/* Right Panel: Preview & Code */}
-          <ResizablePanel defaultSize={45} minSize={30} className="flex flex-col min-w-[350px] min-h-0 overflow-hidden">
+          <ResizablePanel defaultSize={65} minSize={30} className="flex flex-col min-w-[350px] min-h-0 overflow-hidden">
             <WorkspacePreview
               activeFragment={activeFragment}
-              selectedFile={selectedFile}
-              tabState={tabState}
-              setTabState={setTabState}
             />
           </ResizablePanel>
         </ResizablePanelGroup>

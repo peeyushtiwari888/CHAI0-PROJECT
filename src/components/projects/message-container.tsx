@@ -137,6 +137,26 @@ export default function MessageContainer({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col relative min-w-[300px]">
+      {/* AI Agent Header */}
+      <div className="flex h-12 shrink-0 items-center justify-between border-b border-border/40 px-4 bg-background z-10">
+        <h3 className="text-[12px] font-semibold text-foreground uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
+          <span className="text-primary/70">✦</span> AI Agent
+        </h3>
+        <div className="flex items-center gap-2">
+          {isLastMessageUser ? (
+             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+               <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+               Building
+             </span>
+          ) : (
+             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+               <span className="size-1.5 rounded-full bg-muted-foreground/50" />
+               Ready
+             </span>
+          )}
+        </div>
+      </div>
+
       <div className="min-h-0 flex-1 overflow-y-auto pb-10">
         {messages.map((message: any) => (
           <MessageCard

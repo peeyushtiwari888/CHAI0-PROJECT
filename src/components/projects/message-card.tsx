@@ -101,9 +101,16 @@ function FragmentCard({
 
 function UserMessage({ content }: { content: string }) {
   return (
-    <div className="flex w-full min-w-0 justify-end py-6 px-4">
-      <div className="max-w-[85%] rounded-2xl bg-primary/10 px-5 py-3.5 text-[15px] leading-relaxed text-foreground shadow-sm break-words whitespace-pre-wrap">
-        {content}
+    <div className="flex w-full min-w-0 flex-col px-4 py-6">
+      <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col">
+        <div className="flex items-start gap-4">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground font-semibold text-[10px] border border-border/50">
+            YOU
+          </div>
+          <div className="flex-1 pt-1.5 text-[15px] leading-relaxed text-foreground break-words whitespace-pre-wrap font-medium">
+            {content}
+          </div>
+        </div>
       </div>
     </div>
   );
