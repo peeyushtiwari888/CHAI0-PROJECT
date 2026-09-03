@@ -66,10 +66,7 @@ export default function MessageForm({
           event.preventDefault();
           void onSubmit();
         }}
-        className={cn(
-          "relative flex flex-col rounded-2xl border border-border/50 bg-background/50 backdrop-blur-xl p-4 shadow-sm transition-all duration-300",
-          isFocused ? "border-primary/30 bg-background/80 shadow-primary/5 ring-4 ring-primary/10" : "hover:border-border hover:bg-background/60 hover:shadow-md"
-        )}
+        className="relative flex flex-col rounded-xl border border-border/60 bg-background p-3 shadow-sm transition-all focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/20"
       >
         {suggestions.length > 0 && !content && !isFocused && (
           <div className="flex flex-wrap gap-2 mb-3">
@@ -77,13 +74,9 @@ export default function MessageForm({
               <button
                 key={idx}
                 type="button"
-                className="text-xs font-medium px-3 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-colors"
+                className="text-[11px] font-medium px-2.5 py-1 rounded-md border border-border/40 bg-muted/20 text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-colors"
                 onClick={() => {
                   setContent(suggestion);
-                  // We can't safely auto-submit immediately here without waiting for React state, 
-                  // but for UX, users often want to review/edit a suggestion before sending.
-                  // If we want instant submit, we'd call the mutation directly here.
-                  // For now, it populates the textarea cleanly.
                   setTimeout(() => {
                     const el = document.querySelector('textarea');
                     if (el) el.focus();
@@ -106,31 +99,31 @@ export default function MessageForm({
           minRows={1}
           maxRows={8}
           className={cn(
-            "w-full resize-none border-none bg-transparent text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/60 outline-none",
+            "w-full resize-none border-none bg-transparent text-[14px] leading-relaxed text-foreground placeholder:text-muted-foreground/50 outline-none",
             isPending && "opacity-50 cursor-not-allowed"
           )}
           onKeyDown={(event) => {
             if (event.key === "Enter" && !event.shiftKey) {
-              // Standard enter to submit, shift+enter for newline
               event.preventDefault();
               void onSubmit();
             }
           }}
         />
 
-        <div className="mt-3 flex flex-wrap items-center justify-end gap-3">
+        <div className="mt-2 flex items-center justify-end">
           <Button
+            size="icon"
             className={cn(
-              "h-8 rounded-full px-4 text-xs font-semibold shadow-sm transition-all ml-auto",
-              !content.trim() ? "opacity-50" : "hover:scale-105 active:scale-95"
+              "h-7 w-7 rounded-md transition-all shadow-none",
+              !content.trim() ? "opacity-50 cursor-not-allowed" : "hover:bg-primary/90"
             )}
             disabled={isPending || !content.trim()}
             type="submit"
           >
             {isPending ? (
-              <span className="flex items-center gap-2"><Spinner className="size-3" /> Building...</span>
+              <Spinner className="size-3 text-primary-foreground" />
             ) : (
-              <span className="flex items-center gap-2">Send <ArrowUpIcon className="size-3" /></span>
+              <ArrowUpIcon className="size-3.5" />
             )}
           </Button>
         </div>
