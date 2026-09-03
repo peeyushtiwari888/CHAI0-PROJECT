@@ -132,7 +132,7 @@ function TreeNode({
           onClick={() => onSelect?.(currentPath)}
           style={{ paddingLeft: indent + 18 }}
           className={cn(
-            "flex w-full items-center gap-2 py-1.5 pr-2 text-[13px] transition-all",
+            "flex w-full min-w-0 items-center gap-2 py-1.5 pr-2 text-[13px] transition-all",
             "hover:bg-muted/50",
             isSelected
               ? "bg-primary/10 font-semibold text-primary"
@@ -141,7 +141,7 @@ function TreeNode({
           title={name}
         >
           {getFileIcon(String(name))}
-          <span className="truncate">{name}</span>
+          <span className="truncate min-w-0 whitespace-nowrap">{name}</span>
         </button>
       </div>
     );
@@ -153,7 +153,7 @@ function TreeNode({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         style={{ paddingLeft: indent }}
-        className="group/folder flex w-full items-center gap-1.5 py-1.5 pr-2 text-[13px] text-muted-foreground transition-all hover:bg-muted/50 hover:text-foreground"
+        className="group/folder flex w-full min-w-0 items-center gap-1.5 py-1.5 pr-2 text-[13px] text-muted-foreground transition-all hover:bg-muted/50 hover:text-foreground"
         title={name}
       >
         <ChevronRightIcon
@@ -167,7 +167,7 @@ function TreeNode({
         ) : (
           <FolderIcon className="size-4 shrink-0 text-sky-500/80" />
         )}
-        <span className="truncate font-medium">{name}</span>
+        <span className="truncate min-w-0 whitespace-nowrap font-medium">{name}</span>
       </button>
 
       {open && (

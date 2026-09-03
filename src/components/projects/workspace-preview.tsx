@@ -85,13 +85,26 @@ function getLanguageFromExtension(filename: string) {
 
 interface WorkspacePreviewProps {
   activeFragment: ProjectFragment | null;
+  viewMode?: "preview" | "code";
+  onViewModeChange?: (mode: "preview" | "code") => void;
 }
 
-export function WorkspacePreview({ activeFragment }: WorkspacePreviewProps) {
-  const [tabState, setTabState] = useState<"preview" | "code">("preview");
+export function WorkspacePreview({ activeFragment, viewMode = "preview", onViewModeChange }: WorkspacePreviewProps) {
+  const [internalTabState, setInternalTabState] = useState<"preview" | "code">(viewMode);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pulse, setPulse] = useState(false);
+
+  // Sync internal state with props
+  useEffect(() => {
+    setInternalTabState(viewMode);
+  }, [viewMode]);
+
+  const handleTabChange = (value: string) => {
+    const newMode = value as "preview" | "code";
+    setInternalTabState(newMode);
+    onViewModeChange?.(newMode);
+  };
 
   useEffect(() => {
     if (activeFragment?.id) {
@@ -125,10 +138,10 @@ export function WorkspacePreview({ activeFragment }: WorkspacePreviewProps) {
     <div className="flex h-full flex-col bg-background min-w-[350px]">
       <Tabs
         className="flex h-full flex-col"
-        value={tabState}
-        onValueChange={(value) => setTabState(value as "preview" | "code")}
+        value={internalTabState}
+        onValueChange={handleTabChange}
       >
-        <div className="flex h-12 w-full shrink-0 items-center border-b border-border/40 px-4 bg-background">
+        <div className="hidden md:flex h-12 w-full shrink-0 items-center border-b border-border/40 px-4 bg-background">
           <TabsList className="flex h-8 items-center justify-start rounded-md bg-muted/40 p-0.5 border border-border/50">
             <TabsTrigger
               value="preview"
@@ -162,13 +175,15 @@ export function WorkspacePreview({ activeFragment }: WorkspacePreviewProps) {
           {activeFragment ? (
             <FragmentWeb data={activeFragment} />
           ) : (
-            <div className="flex h-full flex-col items-center justify-center text-muted-foreground p-6 text-center bg-muted/5">
-              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-background border border-border/50 shadow-sm">
-                <TerminalSquare className="size-5 text-muted-foreground/60" />
+            <div className="flex h-full flex-col items-center justify-center text-center p-6 bg-background">
+              <div className="mb-6 opacity-40">
+                 <Code className="size-8" />
               </div>
-              <h3 className="text-sm font-medium text-foreground mb-1">No preview available</h3>
-              <p className="text-xs text-muted-foreground max-w-[250px]">Describe what you want to build to see a live preview.</p>
-              <p className="text-[11px] text-muted-foreground/60 mt-4">Start by describing your application in the AI chat.</p>
+              <h3 className="text-lg font-medium text-foreground mb-2 tracking-tight">Your app will appear here</h3>
+              <p className="text-sm text-muted-foreground max-w-[220px] leading-relaxed">
+                Describe what you want to build<br />
+                in the AI Agent.
+              </p>
             </div>
           )}
         </TabsContent>
@@ -186,16 +201,16 @@ export function WorkspacePreview({ activeFragment }: WorkspacePreviewProps) {
                 onSelectFile={handleSelectFile}
               />
             </div>
-            <div className="flex-1 min-w-0 flex flex-col bg-[#0a0a0a]">
+            <div className="flex-1 min-w-0 flex flex-col bg-background">
               {hasFiles && selectedFile && activeFragment.files[selectedFile] ? (
-                <div className="flex h-full flex-col bg-[#0a0a0a]">
-                  <div className="flex h-12 shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a0a] px-4">
+                <div className="flex h-full flex-col bg-background">
+                  <div className="flex h-12 shrink-0 items-center justify-between border-b border-border/40 bg-background px-4">
                     <FileBreadcrumb filePath={selectedFile} />
                     <Hint text="Copy code" side="bottom">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
+                        className="h-8 w-8 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors"
                         onClick={handleCopy}
                       >
                         {copied ? (

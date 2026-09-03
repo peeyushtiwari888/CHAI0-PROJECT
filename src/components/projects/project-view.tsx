@@ -23,7 +23,8 @@ export type ProjectFragment = Fragment & {
 
 export function ProjectView({ projectId }: { projectId: string }) {
   const [activeFragment, setActiveFragment] = useState<ProjectFragment | null>(null);
-  const [mobileTab, setMobileTab] = useState<"chat" | "app">("chat");
+  const [mobileTab, setMobileTab] = useState<"chat" | "preview" | "code">("chat");
+  const [desktopTab, setDesktopTab] = useState<"preview" | "code">("preview");
 
   return (
     <div className="flex h-[100dvh] flex-col bg-background overflow-hidden">
@@ -38,13 +39,19 @@ export function ProjectView({ projectId }: { projectId: string }) {
                onClick={() => setMobileTab('chat')} 
                className={cn("flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all", mobileTab === 'chat' ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground")}
              >
-               AI Chat
+               Chat
              </button>
              <button 
-               onClick={() => setMobileTab('app')} 
-               className={cn("flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all", mobileTab === 'app' ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground")}
+               onClick={() => setMobileTab('preview')} 
+               className={cn("flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all", mobileTab === 'preview' ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground")}
              >
-               Application
+               Preview
+             </button>
+             <button 
+               onClick={() => setMobileTab('code')} 
+               className={cn("flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all", mobileTab === 'code' ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground")}
+             >
+               Code
              </button>
           </div>
         </div>
@@ -52,13 +59,14 @@ export function ProjectView({ projectId }: { projectId: string }) {
         <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
           {/* Left Panel: AI Agent (Process) */}
           <ResizablePanel
-            defaultSize={35}
-            minSize={30}
-            maxSize={60}
+            defaultSize={30}
+            minSize={20}
+            maxSize={45}
             className={cn(
               "flex flex-col bg-muted/10 relative min-w-0 min-h-0 overflow-hidden transition-none",
               mobileTab === 'chat' ? "max-md:!flex max-md:!w-full max-md:!flex-1" : "max-md:!hidden"
             )}
+            style={{ minWidth: '320px', maxWidth: '520px' }}
           >
             <MessageContainer
               projectId={projectId}
@@ -74,15 +82,24 @@ export function ProjectView({ projectId }: { projectId: string }) {
 
           {/* Right Panel: Preview & Code */}
           <ResizablePanel 
-            defaultSize={65} 
-            minSize={30} 
+            defaultSize={70} 
+            minSize={40} 
             className={cn(
               "flex flex-col min-w-0 min-h-0 overflow-hidden transition-none",
-              mobileTab === 'app' ? "max-md:!flex max-md:!w-full max-md:!flex-1" : "max-md:!hidden"
+              (mobileTab === 'preview' || mobileTab === 'code') ? "max-md:!flex max-md:!w-full max-md:!flex-1" : "max-md:!hidden"
             )}
+            style={{ minWidth: '400px' }}
           >
             <WorkspacePreview
               activeFragment={activeFragment}
+              viewMode={mobileTab === 'preview' || mobileTab === 'code' ? mobileTab : desktopTab}
+              onViewModeChange={(mode) => {
+                if (window.innerWidth < 768) {
+                  setMobileTab(mode);
+                } else {
+                  setDesktopTab(mode);
+                }
+              }}
             />
           </ResizablePanel>
         </ResizablePanelGroup>

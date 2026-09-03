@@ -108,12 +108,11 @@ export default function MessageContainer({
     return (
       <div className="flex min-h-0 flex-1 flex-col min-w-[300px]">
         <div className="flex flex-1 flex-col items-center justify-center text-center p-6 text-muted-foreground">
-          <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-primary/10 shadow-sm border border-primary/20">
-             <CodePilotMark className="h-6 w-auto" />
-          </div>
-          <h3 className="text-xl font-semibold text-foreground mb-2 tracking-tight">What do you want to build?</h3>
-          <p className="max-w-md text-sm text-muted-foreground/80 leading-relaxed">
-            Describe your idea and CodePilot will help you turn it into a working full-stack application.
+          <div className="mb-4 text-primary text-xl">✦</div>
+          <h3 className="text-xl font-semibold text-foreground mb-2 tracking-tight">Build with CodePilot</h3>
+          <p className="max-w-xs text-sm text-muted-foreground/80 leading-relaxed">
+            Describe an application, feature, or change<br />
+            and CodePilot will build it for you.
           </p>
         </div>
         <div className="relative pt-1">
@@ -122,9 +121,10 @@ export default function MessageContainer({
             projectId={projectId} 
             placeholder="Describe what you want to build..."
             suggestions={[
-              "Create a modern SaaS analytics dashboard",
-              "Build a responsive landing page",
-              "Design a personal portfolio with a blog"
+              "Build a SaaS dashboard",
+              "Create a portfolio",
+              "Build an expense tracker",
+              "Add authentication"
             ]}
           />
         </div>

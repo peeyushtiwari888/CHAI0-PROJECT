@@ -91,7 +91,7 @@ export default function FragmentWeb({ data }: { data: ProjectFragment }) {
           {isLoading && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm animate-pulse">
                <div className="size-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin mb-4" />
-               <p className="text-sm font-medium text-muted-foreground">Starting Sandbox...</p>
+               <p className="text-sm font-medium text-muted-foreground">Preparing preview...</p>
             </div>
           )}
           

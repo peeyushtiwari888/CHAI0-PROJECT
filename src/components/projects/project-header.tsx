@@ -99,15 +99,14 @@ export default function ProjectHeader({ projectId }: { projectId: string }) {
             </DropdownMenuSub>
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
 
-        <Badge variant="outline" className="hidden sm:inline-flex ml-2 h-5 px-1.5 text-[10px] uppercase tracking-wider font-medium text-emerald-500 border-emerald-500/20 bg-emerald-500/5">
+      {/* Right: User Controls & Status */}
+      <div className="flex items-center gap-3">
+        <Badge variant="outline" className="hidden sm:inline-flex h-5 px-1.5 text-[10px] uppercase tracking-wider font-medium text-emerald-500 border-emerald-500/20 bg-emerald-500/5">
           <span className="size-1 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
           Active
         </Badge>
-      </div>
-
-      {/* Right: User Controls */}
-      <div className="flex items-center gap-3">
         <UserButton />
       </div>
 
