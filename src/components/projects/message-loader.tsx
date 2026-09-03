@@ -80,7 +80,9 @@ export default function MessageLoading() {
             <CodePilotMark className="h-4 w-auto" />
           </div>
           <div className="flex flex-col">
-             <span className="text-sm font-semibold text-foreground">CodePilot Agent</span>
+             <span className="text-[13px] font-semibold text-foreground flex items-center gap-1.5">
+               <span className="text-primary/70">✦</span> AI Agent
+             </span>
              <span className="text-[10px] uppercase tracking-wider text-primary font-medium flex items-center gap-1.5">
                <span className="size-1.5 rounded-full bg-primary animate-ping" /> Working...
              </span>

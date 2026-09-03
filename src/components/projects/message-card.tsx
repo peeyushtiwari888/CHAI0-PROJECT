@@ -158,7 +158,9 @@ function AssistantMessage({
             <CodePilotMark className="h-4 w-auto" />
           </div>
           <div className="flex flex-col">
-             <span className="text-sm font-semibold text-foreground">CodePilot Agent</span>
+             <span className="text-[13px] font-semibold text-foreground flex items-center gap-1.5">
+               <span className="text-primary/70">✦</span> AI Agent
+             </span>
              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">
                {format(new Date(createdAt), "HH:mm")}
              </span>
