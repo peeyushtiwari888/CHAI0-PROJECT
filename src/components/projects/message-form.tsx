@@ -118,7 +118,7 @@ export default function MessageForm({
           }}
         />
 
-        <div className="mt-3 flex items-center justify-between border-t border-border/40 pt-3">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-3">
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
               <kbd className="font-sans">Enter</kbd> to submit
@@ -130,7 +130,7 @@ export default function MessageForm({
           
           <Button
             className={cn(
-              "h-8 rounded-full px-4 text-xs font-semibold shadow-sm transition-all",
+              "h-8 rounded-full px-4 text-xs font-semibold shadow-sm transition-all ml-auto",
               !content.trim() ? "opacity-50" : "hover:scale-105 active:scale-95"
             )}
             disabled={isPending || !content.trim()}

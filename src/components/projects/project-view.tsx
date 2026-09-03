@@ -33,9 +33,9 @@ export function ProjectView({ projectId }: { projectId: string }) {
           {/* Left Panel: AI Agent (Process) */}
           <ResizablePanel
             defaultSize={35}
-            minSize={25}
-            maxSize={45}
-            className="flex flex-col bg-muted/10 relative min-w-[320px] min-h-0 overflow-hidden"
+            minSize={30}
+            maxSize={60}
+            className="flex flex-col bg-muted/10 relative min-w-0 min-h-0 overflow-hidden"
           >
             <MessageContainer
               projectId={projectId}
@@ -47,7 +47,7 @@ export function ProjectView({ projectId }: { projectId: string }) {
           <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
 
           {/* Right Panel: Preview & Code */}
-          <ResizablePanel defaultSize={65} minSize={30} className="flex flex-col min-w-[350px] min-h-0 overflow-hidden">
+          <ResizablePanel defaultSize={65} minSize={30} className="flex flex-col min-w-0 min-h-0 overflow-hidden">
             <WorkspacePreview
               activeFragment={activeFragment}
             />
