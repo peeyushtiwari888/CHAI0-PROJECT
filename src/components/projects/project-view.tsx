@@ -58,29 +58,29 @@ export function ProjectView({ projectId }: { projectId: string }) {
 
           <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
 
-          {/* Center Panel: AI Chat */}
-          <ResizablePanel
-            defaultSize={35}
-            minSize={30}
-            maxSize={50}
-            className="flex flex-col bg-muted/10 relative min-w-0 overflow-hidden"
-          >
-            <MessageContainer
-              projectId={projectId}
-              activeFragment={activeFragment}
-              setActiveFragment={setActiveFragment}
-            />
-          </ResizablePanel>
-
-          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
-
-          {/* Right Panel: Preview & Code */}
-          <ResizablePanel defaultSize={47} minSize={30} className="flex flex-col min-w-0">
+          {/* Center Panel: Preview & Code */}
+          <ResizablePanel defaultSize={55} minSize={30} className="flex flex-col min-w-[350px]">
             <WorkspacePreview
               activeFragment={activeFragment}
               selectedFile={selectedFile}
               tabState={tabState}
               setTabState={setTabState}
+            />
+          </ResizablePanel>
+
+          <ResizableHandle className="w-px bg-border hover:bg-primary/40 transition-colors" />
+
+          {/* Right Panel: AI Chat (Process) */}
+          <ResizablePanel
+            defaultSize={30}
+            minSize={25}
+            maxSize={50}
+            className="flex flex-col bg-muted/10 relative min-w-[300px] overflow-hidden"
+          >
+            <MessageContainer
+              projectId={projectId}
+              activeFragment={activeFragment}
+              setActiveFragment={setActiveFragment}
             />
           </ResizablePanel>
         </ResizablePanelGroup>
