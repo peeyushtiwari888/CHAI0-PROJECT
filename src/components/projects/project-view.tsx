@@ -23,7 +23,6 @@ export type ProjectFragment = Fragment & {
 
 export function ProjectView({ projectId }: { projectId: string }) {
   const [activeFragment, setActiveFragment] = useState<ProjectFragment | null>(null);
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [mobileTab, setMobileTab] = useState<"chat" | "files" | "preview" | "code">("chat");
   const [desktopTab, setDesktopTab] = useState<"preview" | "code">("preview");
 
@@ -64,37 +63,6 @@ export function ProjectView({ projectId }: { projectId: string }) {
         </div>
 
         <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
-          {/* Left Panel: File Explorer */}
-          <ResizablePanel
-            defaultSize={15}
-            minSize={10}
-            maxSize={30}
-            collapsible={true}
-            className={cn(
-              "flex flex-col bg-background relative min-w-0 min-h-0 overflow-hidden transition-none",
-              mobileTab === 'files' ? "max-md:!flex max-md:!w-full max-md:!flex-1" : "max-md:!hidden"
-            )}
-            style={{ minWidth: '200px' }}
-          >
-            <WorkspaceSidebar 
-              files={activeFragment?.files}
-              selectedFile={selectedFile}
-              onSelectFile={(path) => {
-                setSelectedFile(path);
-                if (window.innerWidth < 768) {
-                  setMobileTab('code');
-                } else {
-                  setDesktopTab('code');
-                }
-              }}
-            />
-          </ResizablePanel>
-
-          <ResizableHandle 
-            withHandle 
-            className="hidden md:flex w-px bg-border hover:bg-border/80 transition-colors duration-200 ease-in-out cursor-col-resize" 
-          />
-
           {/* Center Panel: AI Agent (Process) */}
           <ResizablePanel
             defaultSize={35}
@@ -130,7 +98,6 @@ export function ProjectView({ projectId }: { projectId: string }) {
           >
             <WorkspacePreview
               activeFragment={activeFragment}
-              selectedFile={selectedFile}
               viewMode={mobileTab === 'preview' || mobileTab === 'code' ? mobileTab : desktopTab}
               onViewModeChange={(mode) => {
                 if (window.innerWidth < 768) {

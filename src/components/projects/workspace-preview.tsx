@@ -85,13 +85,13 @@ function getLanguageFromExtension(filename: string) {
 
 interface WorkspacePreviewProps {
   activeFragment: ProjectFragment | null;
-  selectedFile?: string | null;
   viewMode?: "preview" | "code";
   onViewModeChange?: (mode: "preview" | "code") => void;
 }
 
-export function WorkspacePreview({ activeFragment, selectedFile = null, viewMode = "preview", onViewModeChange }: WorkspacePreviewProps) {
+export function WorkspacePreview({ activeFragment, viewMode = "preview", onViewModeChange }: WorkspacePreviewProps) {
   const [internalTabState, setInternalTabState] = useState<"preview" | "code">(viewMode);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pulse, setPulse] = useState(false);
 
@@ -128,6 +128,10 @@ export function WorkspacePreview({ activeFragment, selectedFile = null, viewMode
     }
   }, [selectedFile, activeFragment]);
 
+  const handleSelectFile = useCallback((filePath: string) => {
+    setSelectedFile(filePath);
+  }, []);
+
   const hasFiles = activeFragment?.files && Object.keys(activeFragment.files).length > 0;
 
   return (
@@ -137,22 +141,22 @@ export function WorkspacePreview({ activeFragment, selectedFile = null, viewMode
         value={internalTabState}
         onValueChange={handleTabChange}
       >
-        <div className="hidden md:flex h-12 w-full shrink-0 items-center border-b border-border/40 px-4 bg-background">
-          <TabsList className="flex h-8 items-center justify-start rounded-md bg-muted/40 p-0.5 border border-border/50">
+        <div className="hidden md:flex h-[50px] w-full shrink-0 items-center border-b border-border/40 px-4 bg-background">
+          <TabsList className="flex h-8 items-center justify-start rounded-md bg-muted/30 p-1 border border-border/20">
             <TabsTrigger
               value="preview"
-              className="relative h-7 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              className="relative h-6 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
-              <div className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-emerald-500/80" />
-                <span>Preview</span>
+              <div className="flex items-center gap-1.5">
+                <EyeIcon className="size-3.5" />
+                <span>Demo</span>
               </div>
             </TabsTrigger>
             <TabsTrigger
               value="code"
-              className="relative h-7 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              className="relative h-6 rounded-sm px-3 text-xs font-medium text-muted-foreground transition-all hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <Code className="size-3.5" />
                 <span>Code</span>
               </div>
@@ -184,14 +188,20 @@ export function WorkspacePreview({ activeFragment, selectedFile = null, viewMode
           )}
         </TabsContent>
 
-        {/* CODE TAB */}
         <TabsContent
           value="code"
           className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden bg-background"
         >
           <div className="flex h-full w-full">
+            <div className="w-[240px] shrink-0 border-r border-border/40 hidden md:block h-full">
+              <WorkspaceSidebar 
+                files={activeFragment?.files}
+                selectedFile={selectedFile}
+                onSelectFile={handleSelectFile}
+              />
+            </div>
             <div className="flex-1 min-w-0 flex flex-col bg-background">
-              {hasFiles && selectedFile && activeFragment.files[selectedFile] ? (
+              {hasFiles && selectedFile && activeFragment?.files?.[selectedFile] ? (
                 <div className="flex h-full flex-col bg-background">
                   <div className="flex h-12 shrink-0 items-center justify-between border-b border-border/40 bg-background px-4">
                     <FileBreadcrumb filePath={selectedFile} />
