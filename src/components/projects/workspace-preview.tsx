@@ -85,13 +85,13 @@ function getLanguageFromExtension(filename: string) {
 
 interface WorkspacePreviewProps {
   activeFragment: ProjectFragment | null;
+  selectedFile?: string | null;
   viewMode?: "preview" | "code";
   onViewModeChange?: (mode: "preview" | "code") => void;
 }
 
-export function WorkspacePreview({ activeFragment, viewMode = "preview", onViewModeChange }: WorkspacePreviewProps) {
+export function WorkspacePreview({ activeFragment, selectedFile = null, viewMode = "preview", onViewModeChange }: WorkspacePreviewProps) {
   const [internalTabState, setInternalTabState] = useState<"preview" | "code">(viewMode);
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [pulse, setPulse] = useState(false);
 
@@ -113,10 +113,6 @@ export function WorkspacePreview({ activeFragment, viewMode = "preview", onViewM
       return () => clearTimeout(t);
     }
   }, [activeFragment?.id]);
-
-  const handleSelectFile = useCallback((filePath: string) => {
-    setSelectedFile(filePath);
-  }, []);
 
   const handleCopy = useCallback(() => {
     if (selectedFile && activeFragment?.files?.[selectedFile]) {
@@ -194,13 +190,6 @@ export function WorkspacePreview({ activeFragment, viewMode = "preview", onViewM
           className="mt-0 min-h-0 flex-1 overflow-hidden data-[state=inactive]:hidden bg-background"
         >
           <div className="flex h-full w-full">
-            <div className="w-[240px] shrink-0 border-r border-border/40 hidden md:block h-full">
-              <WorkspaceSidebar 
-                files={activeFragment?.files}
-                selectedFile={selectedFile}
-                onSelectFile={handleSelectFile}
-              />
-            </div>
             <div className="flex-1 min-w-0 flex flex-col bg-background">
               {hasFiles && selectedFile && activeFragment.files[selectedFile] ? (
                 <div className="flex h-full flex-col bg-background">
